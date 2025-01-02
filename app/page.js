@@ -8,8 +8,6 @@ import {AiFillTwitterCircle,
 
 import deved from "../public/image 1.png"
 import p1 from "../public/design.png"
-import p2 from "../public/code.png"
-import p3 from "../public/consulting.png"
 
 
 export default function Home() {
@@ -20,18 +18,18 @@ export default function Home() {
       </Head>
       <main className="bg-white ">
         <section className="min-h-screen">
-          <nav className="py-10 flex justify-between bg-slate-300 px-10 w-auto">
-            <h1 className="text-xl font-burtons ">developedbynate</h1>
+          <nav className="py-10 flex justify-between bg-white px-10 w-auto">
+            <h1 className="text-xl font-burtons ">nathan maniego website</h1>
             <ul className="flex justify-center">
-              <li><a className="bg-gradient-to-r from-cyan-500 to-teal-500 text-white px-4 py-2 rounded-xl ml-8"href="#">Resume</a></li>
+              <li><a className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-4 py-2 rounded-xl ml-8"href="https://drive.google.com/file/d/1dn2lhqgCZvvIeTeGY24pvZ27yGr70kEj/view?usp=sharing">Resume</a></li>
             </ul>
           </nav>
           <div className="text-center p-10">
-            <h2 className="text-5xl py-2 text-teal-600 font-burtons">Nathan Maniego</h2>
+            <h2 className="text-5xl py-2 text-purple-600 font-burtons">Nathan Maniego</h2>
             <h3 className="text-2xl py-2">Computer Science Student</h3>
             <p className="text-base py-2 leading-8 text-gray-800 ">Second year computer science student at the University of Toronto.
               Passionate about Software Engineering and making money! </p>
-          <div className="relative bg-gradient-to-b from-teal-500 rounded-full w-80 h-80 mx-auto mt-10 overflow-hidden">
+          <div className="relative bg-gradient-to-b from-purple-500 rounded-full w-80 h-80 mx-auto mt-10 overflow-hidden">
             <Image src={deved} alt="nathanmaniego avatar" layout="fill" objectFit="cover"></Image>
           </div>
           </div>
@@ -44,7 +42,7 @@ export default function Home() {
             <div>
               <h3 className=" text-3xl ">About Me</h3>
               <p className=" leading-8 text-md  py-4 text-gray-800">
-              I’m a computer science enthusiast with a passion for writing clean, efficient code and exploring emerging technologies. Always eager to learn and adapt, I enjoy diving into <span className="text-teal-500"> complex problems, optimizing algorithms, and contributing to collaborative software projects.</span> Whether I’m developing applications, experimenting with new programming languages, or refining my systems design skills, I bring curiosity, precision, and a growth mindset to everything I do.
+              I’m a computer science enthusiast with a passion for writing clean, efficient code and exploring emerging technologies. Always eager to learn and adapt, I enjoy diving into <span className="text-purple-500"> complex problems, optimizing algorithms, and contributing to collaborative software projects.</span> Whether I’m developing applications, experimenting with new programming languages, or refining my systems design skills, I bring curiosity, precision, and a growth mindset to everything I do.
               </p>
             </div>
             <div className="lg:flex gap-10">
@@ -57,7 +55,7 @@ export default function Home() {
                 <p className="py-2">
                   Whether I’m developing applications, experimenting with new programming languages, or refining my systems design skills, I bring curiosity, precision, and a growth mindset to everything I do.
                 </p>
-                <h4 className="py-2 text-teal-800">Design tools I use</h4>
+                <h4 className="py-2 text-purple-800">Design tools I use</h4>
                 <p className="text-gray-800 py-1">Java</p>
                 <p className="text-gray-800 py-1">JavaFX</p>
                 <p className="text-gray-800 py-1">Ollama3</p>
@@ -72,7 +70,7 @@ export default function Home() {
                 <p className="py-2">
                   Whether I’m developing applications, experimenting with new programming languages, or refining my systems design skills, I bring curiosity, precision, and a growth mindset to everything I do.
                 </p>
-                <h4 className="py-2 text-teal-800">Design tools I use</h4>
+                <h4 className="py-2 text-purple-800">Design tools I use</h4>
                 <p className="text-gray-800 py-1">Java</p>
                 <p className="text-gray-800 py-1">JavaFX</p>
                 <p className="text-gray-800 py-1">Ollama3</p>
@@ -87,14 +85,52 @@ export default function Home() {
                 <p className="py-2">
                   Whether I’m developing applications, experimenting with new programming languages, or refining my systems design skills, I bring curiosity, precision, and a growth mindset to everything I do.
                 </p>
-                <h4 className="py-2 text-teal-800">Design tools I use</h4>
+                <h4 className="py-2 text-purple-800">Design tools I use</h4>
                 <p className="text-gray-800 py-1">Java</p>
                 <p className="text-gray-800 py-1">JavaFX</p>
                 <p className="text-gray-800 py-1">Ollama3</p>
               </div>
             </div>
           </section>
-
+          
+          
+          <footer className="bg-purple-100 text-gray-800 py-8 px-10 mt-10">
+          <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <p className="text-sm">
+              © 2025 Nathan Maniego. All Rights Reserved.
+            </p>
+            <ul className="flex justify-center gap-4 mt-4 md:mt-0">
+              <li>
+                <a
+                  href="https://www.linkedin.com/in/nathanmaniego/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-purple-500 transition"
+                >
+                  LinkedIn
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.youtube.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-purple-500 transition"
+                >
+                  YouTube
+                </a>
+              </li>
+              <li>
+                <a
+                  href="mailto:nathancarlomaniego@gmail.com"
+                  className="hover:text-purple-500 transition"
+                >
+                  Email
+                </a>
+              </li>
+            </ul>
+          </div>
+        </footer>
       </main>
     </div>
   
