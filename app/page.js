@@ -1,5 +1,5 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, MotionConfig } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
 import Navbar from "../components/Navbar";
@@ -61,7 +61,7 @@ const projects = [
     technologies: ["React", "Node.js", "FastAPI", "Selenium", "BeautifulSoup"],
     githubUrl: "https://github.com/nathancmaniego/deerhacks-iv",
     featured: false,
-    category: "web",
+    category: "personal",
     emoji: "📝",
   },
   {
@@ -71,8 +71,16 @@ const projects = [
     githubUrl: "null",
     liveUrl: "https://www.youtube.com/watch?v=SwGaXpNMV9M",
     featured: false,
-    category: "desktop",
+    category: "school",
     emoji: "🐧",
+  },
+  {
+    title: "Connect4 AI Agent",
+    description: "A Connect4 AI agent that uses a minimax algorithm to find the best move. It also supports a GUI that allows you to play against the AI.",
+    technologies: ["Python", "Minimax"],
+    featured: false,
+    category: "school",
+    emoji: "🔍",
   },
   {
     title: "Project Bleu",
@@ -80,7 +88,7 @@ const projects = [
     technologies: ["Python", "Pandas", "Scikit-learn", "React", "Node.js"],
     githubUrl: "https://github.com/nathancmaniego/CoMHackathon-ProjectBleu",
     featured: false,
-    category: "machine-learning",
+    category: "personal",
     emoji: "🌧️",
   },
 
@@ -90,7 +98,7 @@ const projects = [
     technologies: ["Java", "JavaFX", "Ollama3", "Maven"],
     liveUrl: null,
     featured: false,
-    category: "desktop",
+    category: "school",
     emoji: "🖌️",
   },
   {
@@ -99,7 +107,7 @@ const projects = [
     technologies: ["Next.js", "React", "Framer Motion", "Tailwind CSS", "TypeScript"],
     liveUrl: "https://nathanmaniego.com",
     featured: false,
-    category: "web",
+    category: "personal",
     emoji: "🖼️",
   },
   {
@@ -109,10 +117,12 @@ const projects = [
     githubUrl: "https://github.com/nathancmaniego/toronto_raptors_player_consistency",
     liveUrl: null,
     featured: false,
-    category: "machine-learning",
+    category: "personal",
     emoji: "🏀",
   },
 ];
+
+const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
 const iconMap = {
   python: "devicon-python-plain colored",
@@ -154,7 +164,21 @@ import avatar2 from "@/assets/IMG_9460.JPG";
 
 
 const Home = () => {
-  const containerVariants = {
+  const reduceMotion = isMobile;
+
+  const containerVariants = reduceMotion ? {
+    hidden: { opacity: 0 },
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
+    },
+    visible: { opacity: 1 },
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
+    },
+  } :
+  {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -165,7 +189,15 @@ const Home = () => {
     },
   };
 
-  const itemVariants = {
+  const itemVariants = reduceMotion ? {
+    hidden: { opacity: 0 },
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+    },
+    visible: { opacity: 1 },
+  } :
+  {
     hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
@@ -236,8 +268,8 @@ const Home = () => {
   
   const categories = [
     { id: "all", name: "All Projects" },
-    // { id: "web", name: "Web Development" },
-    // { id: "machine-learning", name: "Machine Learning" },
+    { id: "personal", name: "Personal Projects" },
+    { id: "school", name: "School Projects" },
     // { id: "desktop", name: "Desktop Apps" },
   ];
   const filteredProjects = filter === "all" ? projects : projects.filter((project) => project.category === filter);
@@ -271,16 +303,14 @@ const Home = () => {
 
   return (
     
+    <MotionConfig reducedMotion={reduceMotion ? "always" : "never"}>
     <div className="min-h-screen bg-white">
       <Navbar/>
       
       {/* Hero Section */}
       <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 md:pt-24">
         {/* Background Elements */}
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-100 rounded-full opacity-20 blur-3xl animate-pulse" />
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-100 rounded-full opacity-20 blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-        </div>
+
 
         <div className="container mx-auto px-6 lg:px-8">
           <motion.div
@@ -296,7 +326,7 @@ const Home = () => {
             >
               <div className="relative inline-block p-5">
                 <motion.div
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={reduceMotion ? undefined : { scale: 1.05 }}
                   className="relative"
                 >
                   <Image
@@ -370,8 +400,8 @@ const Home = () => {
                 href="https://www.linkedin.com/in/nathanmaniego/"
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ scale: 1.2, y: -2 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={reduceMotion ? undefined : { scale: 1.2, y: -2 }}
+                whileTap={reduceMotion ? undefined : { scale: 0.95 }}
                 className="text-gray-400 hover:text-blue-600 transition-colors"
               >
                 <AiFillLinkedin className="w-6 h-6" />
@@ -380,8 +410,8 @@ const Home = () => {
                 href="https://github.com/nathancmaniego"
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ scale: 1.2, y: -2 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={reduceMotion ? undefined : { scale: 1.2, y: -2 }}
+                whileTap={reduceMotion ? undefined : { scale: 0.95 }}
                 className="text-gray-400 hover:text-gray-800 transition-colors pb-20"
               >
                 <AiFillGithub className="w-6 h-6" />
@@ -454,10 +484,11 @@ const Home = () => {
               </motion.div>
 
               {/* Text Content */}
+              
               <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6 }}
+                initial={reduceMotion ? {opacity: 1, x: 0} : { opacity: 0, x: -50 }}
+                whileInView={reduceMotion ? undefined : { opacity: 1, x: 0 }}
+                transition={reduceMotion ? undefined : { duration: 0.6 }}
                 viewport={{ once: true }}
               >
                 <h3 className="text-2xl font-semibold text-gray-900 mb-6 lg:text-left text-center">
@@ -465,7 +496,7 @@ const Home = () => {
                 </h3>
                 <div className="space-y-4 text-gray-600 leading-relaxed lg:text-left text-center">
                   <p className="lg:text-left text-center">
-                    I'm a second-year Computer Science student at the University of Toronto 
+                    I'm a third-year Computer Science student at the University of Toronto 
                     with a passion for building innovative solutions and exploring emerging technologies.
                   </p>
                   <p className="lg:text-left text-center">
@@ -476,7 +507,7 @@ const Home = () => {
                   <p className="lg:text-left text-center">
                     When I'm not coding, you can find me exploring new technologies, contributing 
                     to open-source projects, or working on personal projects that challenge me 
-                    to learn and grow.
+                    to learn and grow. Sometimes I'm also found playing basketball, lifting weights, or eating.
                   </p>
                 </div>
               </motion.div>
@@ -494,18 +525,18 @@ const Home = () => {
       <section className="py-20 bg-white">
         <div className="container mx-auto px-6 lg:px-8">
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            initial={reduceMotion ? {opacity: 1, y: 0} : { opacity: 0, y: 50 }}
+            whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+            transition={reduceMotion ? undefined : { duration: 0.6 }}
             viewport={{ once: true }}
             className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto"
           >
             {stats.map((stat, index) => (
               <motion.div
                 key={stat.label}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
+                initial={reduceMotion ? {opacity: 1, scale: 1} : { opacity: 0, scale: 0.8 }}
+                whileInView={reduceMotion ? undefined : { opacity: 1, scale: 1 }}
+                transition={reduceMotion ? undefined : { duration: 0.4, delay: index * 0.1 }}
                 viewport={{ once: true }}
                 className="text-center"
               >
@@ -576,10 +607,10 @@ const Home = () => {
             {skillCategories.map((group) => (
               <div key={group.title}>
                 <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={reduceMotion ? {opacity: 1, y: 0} : { opacity: 0, y: 10 }}
+                  whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.4 }}
+                  transition={reduceMotion ? {undefined} : { duration: 0.4 }}
                 >
                   <h3 className="align-center text-center text-sm uppercase tracking-widest mb-4">{group.title}</h3>
                 </motion.div>
@@ -589,11 +620,11 @@ const Home = () => {
                   return (
                     <motion.div
                       key={name}
-                      initial={{ opacity: 0, y: 10 }}
-                      whileInView={{ opacity: 1, y: 0 }}
+                      initial={reduceMotion ? {opacity: 1, y: 0} : { opacity: 0, y: 10 }}
+                      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
                       viewport={{ once: true }}
-                      transition={{ duration: 0.4 }}
-                      whileHover={{ y: -2, scale: 1.03 }}
+                      transition={reduceMotion ? undefined : { duration: 0.4 }}
+                      whileHover={reduceMotion ? undefined : { y: -2, scale: 1.03 }}
                       className="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 hover:border-white/20 backdrop-blur-sm shadow-sm"
                     >
                       <i className={`${iconClass} text-xl`} />
@@ -615,9 +646,9 @@ const Home = () => {
 
           {/* Filter */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            initial={reduceMotion ? {opacity: 1, y: 0} : { opacity: 0, y: 20 }}
+            whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+            transition={reduceMotion ? undefined : { duration: 0.6 }}
             viewport={{ once: true }}
             className="flex flex-wrap justify-center gap-4 mt-10"
           >
@@ -625,8 +656,8 @@ const Home = () => {
               <motion.button
                 key={category.id}
                 onClick={() => setFilter(category.id)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={reduceMotion ? undefined : { scale: 1.05 }}
+                whileTap={reduceMotion ? undefined : { scale: 0.95 }}
                 className={`px-6 py-3 rounded-full font-medium transition-all duration-200 ${
                   filter === category.id
                     ? "bg-gray-900 text-white shadow-lg"
@@ -640,20 +671,20 @@ const Home = () => {
 
           {/* Grid */}
           <motion.div
-            initial="hidden"
-            whileInView="visible"
+            initial={reduceMotion ? {opacity: 1} : "hidden"}
+            whileInView={reduceMotion ? undefined : "visible"}
             viewport={{ once: true }}
             className="mt-16 grid grid-cols-1 lg:grid-cols-2  gap-8"
           >
             {filteredProjects.map((project, index) => (
-              <motion.div key={project.title} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: index * 0.05 }} viewport={{ once: true }} >
+              <motion.div key={project.title} initial={reduceMotion ? {opacity: 1, y: 0} : { opacity: 0, y: 30 }} whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={reduceMotion ? undefined : { duration: 0.6, delay: index * 0.05 }} viewport={{ once: true }} >
                 <ProjectCard project={project} index={index} />
               </motion.div>
             ))}
           </motion.div>
 
           {filteredProjects.length === 0 && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-20">
+            <motion.div initial={reduceMotion ? {opacity: 1, y: 0} : { opacity: 0 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} className="text-center py-20">
               <div className="text-6xl mb-4">🔍</div>
               <h3 className="text-2xl font-semibold text-gray-900 mb-2">No projects found</h3>
               <p className="text-gray-600">Try selecting a different category to see more projects.</p>
@@ -666,6 +697,7 @@ const Home = () => {
 
       <Footer />
     </div>
+    </MotionConfig>
   );
 };
 

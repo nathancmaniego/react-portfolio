@@ -83,7 +83,7 @@ const Navbar = () => {
                 rel="noopener noreferrer"
                 whileHover={{ y: -2 }}
                 whileTap={{ y: 0 }}
-                className="ml-2 inline-flex items-center px-4 py-2 text-sm font-medium rounded-xl border border-white/40 bg-white/20 backdrop-blur-md shadow-sm hover:bg-white/30 text-gray-900"
+                className="ml-2 inline-flex items-center px-4 py-2 text-sm font-medium rounded-xl border border-gray/40 bg-white/20  shadow-sm hover:bg-white/30 text-gray-900"
               >
                 Resume
               </motion.a>
@@ -148,7 +148,7 @@ const Navbar = () => {
                 href="https://drive.google.com/file/d/1ZCCvQgkCircQr9MiddX2ouyTfzfdrwjQ/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-2 mx-2 inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-xl border border-white/40 bg-white/40 backdrop-blur-md shadow-sm hover:bg-white/60 text-gray-900"
+                className="mt-2 mx-2 inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-xl border border-gray/40 bg-white/40 backdrop-blur-md shadow-sm hover:bg-white/60 text-gray-900"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Resume
