@@ -1,36 +1,127 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Nathan Maniego - Portfolio Website
 
-## Getting Started
+A modern, responsive portfolio website built with Next.js, React, Tailwind CSS, and Framer Motion. This website showcases my projects, skills, and experience as a Computer Science student and developer.
 
-First, run the development server:
+## 🚀 Features
 
+- **Modern Design**: Clean, minimal design inspired by Framer templates
+- **Responsive**: Fully responsive design that works on all devices
+- **Smooth Animations**: Beautiful animations powered by Framer Motion
+- **Performance Optimized**: Built with Next.js for optimal performance
+- **SEO Ready**: Comprehensive SEO optimization with meta tags
+- **Accessible**: Built with accessibility best practices
+
+## 🛠️ Tech Stack
+
+- **Frontend**: Next.js 15, React 19, TypeScript
+- **Styling**: Tailwind CSS
+- **Animations**: Framer Motion
+- **Icons**: React Icons
+- **Fonts**: Inter (Google Fonts)
+- **Deployment**: Vercel
+
+## 📱 Pages
+
+- **Home**: Hero section with animated introduction and featured projects
+- **About**: Personal information, skills, experience, and achievements
+- **Projects**: Portfolio of projects with filtering and detailed descriptions
+- **Contact**: Contact form and social media links
+
+## 🎨 Design System
+
+- **Colors**: Clean grayscale palette with accent colors
+- **Typography**: Inter font family for modern, readable text
+- **Spacing**: Consistent spacing using Tailwind's spacing scale
+- **Components**: Reusable components for maintainability
+- **Animations**: Subtle, purposeful animations for enhanced UX
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18+ 
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/nathanmaniego/portfolio.git
+cd portfolio
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+3. Run the development server:
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Learn More
+## 📦 Available Scripts
 
-To learn more about Next.js, take a look at the following resources:
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🎯 Key Components
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Navbar**: Responsive navigation with smooth scroll
+- **Footer**: Social links and contact information
+- **ProjectCard**: Reusable project showcase component
+- **Button**: Customizable button component with variants
+- **SectionTitle**: Consistent section headers
 
-## Deploy on Vercel
+## 📱 Responsive Design
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The website is fully responsive and optimized for:
+- Mobile devices (320px+)
+- Tablets (768px+)
+- Desktop (1024px+)
+- Large screens (1280px+)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🎨 Animation Features
+
+- **Page Transitions**: Smooth transitions between pages
+- **Scroll Animations**: Elements animate as they come into view
+- **Hover Effects**: Interactive hover states
+- **Staggered Animations**: Sequential animations for lists
+- **Loading States**: Smooth loading animations
+
+## 🔧 Customization
+
+### Colors
+Update the color scheme in `tailwind.config.js` and `globals.css`.
+
+### Content
+- Update personal information in each page component
+- Modify project data in `/app/projects/page.js`
+- Update contact information in `/app/contact/page.js`
+
+### Styling
+- Customize components in the `/components` directory
+- Modify global styles in `/app/globals.css`
+- Update Tailwind configuration in `tailwind.config.js`
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome! Feel free to check the issues page.
+
+## 📞 Contact
+
+- **Email**: nathancarlomaniego@gmail.com
+- **LinkedIn**: [nathanmaniego](https://www.linkedin.com/in/nathanmaniego/)
+- **GitHub**: [nathanmaniego](https://github.com/nathanmaniego)
+
+---
+
+Built with ❤️ by Nathan Maniego
