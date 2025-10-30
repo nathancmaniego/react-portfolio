@@ -10,11 +10,11 @@ import SectionTitle from "../components/SectionTitle";
 import ProjectCard from "../components/ProjectCard";
 import { AiFillLinkedin, AiFillGithub, AiOutlineMail, AiOutlineArrowRight, AiOutlinePhone, AiOutlineEnvironment } from "react-icons/ai";
 
-import uoft from "../public/logos/uoft.png";
-import datapro from "../public/logos/321datapro.jpg";
-import ops from "../public/logos/ops.png";
-import uoftai from "../public/logos/uoftai.png";
-import e4x from "../public/logos/E4X-icon.png";
+import uoft from "@/assets/logos/uoft.png";
+import datapro from "@/assets/logos/321datapro.jpg";
+import ops from "@/assets/logos/ops.png";
+import uoftai from "@/assets/logos/uoftai.png";
+import e4x from "@/assets/logos/E4X-icon.png";
 
 const experiences = [
   {
@@ -150,8 +150,8 @@ const iconMap = {
 
 
 
-import avatar from "../public/IMG_8030.jpg";
-import avatar2 from "../public/IMG_9460.JPG";
+import avatar from "@/assets/IMG_8030.jpg";
+import avatar2 from "@/assets/IMG_9460.JPG";
 
 
 const Home = () => {
