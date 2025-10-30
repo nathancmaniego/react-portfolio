@@ -1,7 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -150,7 +149,7 @@ const iconMap = {
 
 
 
-import avatar from "@/assets/IMG_8030.jpg";
+import avatar from "@/assets/IMG_8030.JPG";
 import avatar2 from "@/assets/IMG_9460.JPG";
 
 
