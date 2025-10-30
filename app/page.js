@@ -270,11 +270,12 @@ const Home = () => {
   ];
 
   return (
+    
     <div className="min-h-screen bg-white">
-      <Navbar />
+      <Navbar/>
       
       {/* Hero Section */}
-      <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 md:pt-24">
         {/* Background Elements */}
         <div className="absolute inset-0 -z-10">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-100 rounded-full opacity-20 blur-3xl animate-pulse" />
@@ -420,7 +421,7 @@ const Home = () => {
 
       
       {/* About Section */}
-      <section id="about" className="py-20 bg-gray-50">
+      <section id="about" className="py-20 bg-gray-50 scroll-mt-24">
         <div className="container mx-auto px-6 lg:px-8">
           <SectionTitle
             title="About Me"
@@ -521,7 +522,7 @@ const Home = () => {
       </section>
 
       {/* Experience Section */}
-      <section id="experience" className="py-20 bg-gray-50">
+      <section id="experience" className="py-20 bg-gray-50 scroll-mt-24">
         <div className="container mx-auto px-6 lg:px-8">
           <SectionTitle
             title="Experience & Education"
@@ -567,7 +568,7 @@ const Home = () => {
       </section>
 
       {/* Skillset Section */}
-      <section id="skills" className="py-24">
+      <section id="skills" className="py-24 scroll-mt-24">
         <div className="container mx-auto px-6 lg:px-8">
           <SectionTitle title="Professional Skillset" subtitle="Frameworks, languages and tools I use" />
 
@@ -608,7 +609,7 @@ const Home = () => {
       </section>
 
       {/* Projects Section (full) */}
-      <section id="projects" className="py-20 bg-gray-50">
+      <section id="projects" className="py-20 bg-gray-50 scroll-mt-24">
         <div className="container mx-auto px-6 lg:px-8">
           <SectionTitle title="Projects" subtitle="Some of my recent work" />
 
