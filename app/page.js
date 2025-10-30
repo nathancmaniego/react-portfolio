@@ -1,7 +1,7 @@
 "use client";
 import { motion, MotionConfig } from "framer-motion";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Button from "../components/Button";
@@ -122,8 +122,6 @@ const projects = [
   },
 ];
 
-const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-
 const iconMap = {
   python: "devicon-python-plain colored",
   java: "devicon-java-plain colored",
@@ -164,46 +162,38 @@ import avatar2 from "@/assets/IMG_9460.JPG";
 
 
 const Home = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const reduceMotion = isMobile;
 
-  const containerVariants = reduceMotion ? {
-    hidden: { opacity: 0 },
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
-    },
-    visible: { opacity: 1 },
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
-    },
-  } :
-  {
+  const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
+        staggerChildren: reduceMotion ? 0 : 0.1,
+        delayChildren: reduceMotion ? 0 : 0.2,
       },
     },
   };
 
-  const itemVariants = reduceMotion ? {
-    hidden: { opacity: 0 },
-    transition: {
-      duration: 0.6,
-      ease: "easeOut",
-    },
-    visible: { opacity: 1 },
-  } :
-  {
-    hidden: { opacity: 0, y: 30 },
+  const itemVariants = {
+    hidden: { opacity: 0, y: reduceMotion ? 0 : 30 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.6,
+        duration: reduceMotion ? 0.2 : 0.6,
         ease: "easeOut",
       },
     },
@@ -317,16 +307,20 @@ const Home = () => {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
+            style={{ willChange: 'opacity' }}
             className="text-center max-w-4xl mx-auto"
           >
             {/* Avatar */}
             <motion.div
               variants={itemVariants}
+              style={{ willChange: 'opacity, transform' }}
               className="mb-8"
             >
               <div className="relative inline-block p-5">
                 <motion.div
                   whileHover={reduceMotion ? undefined : { scale: 1.05 }}
+                  transition={{ duration: 0.2 }}
+                  style={{ willChange: 'transform' }}
                   className="relative"
                 >
                   <Image
@@ -335,8 +329,9 @@ const Home = () => {
                     width={400}
                     height={400}
                     className="border-4 border-white rounded-2xl shadow-2xl z-2"
+                    priority
                   />
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-400 to-purple-400 opacity-0 blur-xl z-1" />
+                  <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-400 to-purple-400 ${isMobile ? 'opacity-0' : 'opacity-0 blur-xl'} z-1`} />
                 </motion.div>
               </div>
             </motion.div>
@@ -344,6 +339,7 @@ const Home = () => {
             {/* Name */}
             <motion.h1
               variants={itemVariants}
+              style={{ willChange: 'opacity, transform' }}
               className="text-5xl md:text-7xl font-bold text-gray-900 mb-4"
             >
               Nathan Maniego
@@ -352,6 +348,7 @@ const Home = () => {
             {/* Title */}
             <motion.h2
               variants={itemVariants}
+              style={{ willChange: 'opacity, transform' }}
               className="text-2xl md:text-3xl text-gray-600 mb-6 font-medium"
             >
               Computer Science Student & Developer
@@ -360,6 +357,7 @@ const Home = () => {
             {/* Description */}
             <motion.p
               variants={itemVariants}
+              style={{ willChange: 'opacity, transform' }}
               className="text-lg md:text-xl text-gray-500 mb-8 max-w-2xl mx-auto leading-relaxed"
             >
               Passionate about building innovative solutions and exploring emerging technologies. 
@@ -369,6 +367,7 @@ const Home = () => {
             {/* CTA Buttons */}
             <motion.div
               variants={itemVariants}
+              style={{ willChange: 'opacity, transform' }}
               className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
             >
               <Button
@@ -394,14 +393,17 @@ const Home = () => {
             {/* Social Links */}
             <motion.div
               variants={itemVariants}
+              style={{ willChange: 'opacity, transform' }}
               className="flex justify-center space-x-6"
             >
               <motion.a
                 href="https://www.linkedin.com/in/nathanmaniego/"
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={reduceMotion ? undefined : { scale: 1.2, y: -2 }}
+                whileHover={reduceMotion ? undefined : { scale: 1.1 }}
                 whileTap={reduceMotion ? undefined : { scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                style={{ willChange: 'transform' }}
                 className="text-gray-400 hover:text-blue-600 transition-colors"
               >
                 <AiFillLinkedin className="w-6 h-6" />
@@ -410,43 +412,17 @@ const Home = () => {
                 href="https://github.com/nathancmaniego"
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={reduceMotion ? undefined : { scale: 1.2, y: -2 }}
+                whileHover={reduceMotion ? undefined : { scale: 1.1 }}
                 whileTap={reduceMotion ? undefined : { scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                style={{ willChange: 'transform' }}
                 className="text-gray-400 hover:text-gray-800 transition-colors pb-20"
               >
                 <AiFillGithub className="w-6 h-6" />
               </motion.a>
-              {/* <motion.a
-                href="mailto:nathancarlomaniego@gmail.com"
-                whileHover={{ scale: 1.2, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="text-gray-400 hover:text-red-500 transition-colors"
-              >
-                <AiOutlineMail className="w-6 h-6" />
-              </motion.a> */}
             </motion.div>
           </motion.div>
         </div>
-
-        {/* Scroll Indicator
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1, duration: 0.6 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="w-6 h-10 border-2 border-gray-300 rounded-full flex justify-center"
-          >
-            <motion.div
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="w-1 h-3 bg-gray-400 rounded-full mt-2"
-            />
-          </motion.div>
-        </motion.div> */}
       </section>
 
       
@@ -461,14 +437,15 @@ const Home = () => {
           <div className="max-w-4xl mx-auto mt-16">
             <div className="grid md:grid-cols-2 gap-12 items-center">
                             {/* Image */}
-                            <motion.div
-                initial={{ opacity: 0, x: -50 }}
+            <motion.div
+                initial={{ opacity: 0, x: reduceMotion ? 0 : -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
+                transition={{ duration: reduceMotion ? 0.2 : 0.6 }}
+                viewport={{ once: true, margin: "-100px" }}
+                style={{ willChange: 'opacity, transform' }}
               >
                 <div className="relative">
-                <div className="absolute inset-0 rounded-2xl  from-blue-400 to-purple-400 opacity-20 blur-xl z-[0] " />
+                <div className={`absolute inset-0 rounded-2xl from-blue-400 to-purple-400 ${isMobile ? 'opacity-0' : 'opacity-20 blur-xl'} z-[0]`} />
 
                   <Image
                     src={avatar2}
@@ -476,20 +453,19 @@ const Home = () => {
                     width={400}
                     height={400}
                     className="rounded-2xl shadow-2xl mx-auto"
+                    loading="lazy"
                   />
-                  
-
-
                 </div>
               </motion.div>
 
               {/* Text Content */}
               
               <motion.div
-                initial={reduceMotion ? {opacity: 1, x: 0} : { opacity: 0, x: -50 }}
-                whileInView={reduceMotion ? undefined : { opacity: 1, x: 0 }}
-                transition={reduceMotion ? undefined : { duration: 0.6 }}
+                initial={{ opacity: 0, x: reduceMotion ? 0 : -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: reduceMotion ? 0.2 : 0.6 }}
                 viewport={{ once: true }}
+                style={{ willChange: 'opacity, transform' }}
               >
                 <h3 className="text-2xl font-semibold text-gray-900 mb-6 lg:text-left text-center">
                   Hello! I'm Nathan
@@ -525,19 +501,21 @@ const Home = () => {
       <section className="py-20 bg-white">
         <div className="container mx-auto px-6 lg:px-8">
           <motion.div
-            initial={reduceMotion ? {opacity: 1, y: 0} : { opacity: 0, y: 50 }}
-            whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-            transition={reduceMotion ? undefined : { duration: 0.6 }}
+            initial={{ opacity: 0, y: reduceMotion ? 0 : 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: reduceMotion ? 0.2 : 0.6 }}
             viewport={{ once: true }}
+            style={{ willChange: 'opacity, transform' }}
             className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto"
           >
             {stats.map((stat, index) => (
               <motion.div
                 key={stat.label}
-                initial={reduceMotion ? {opacity: 1, scale: 1} : { opacity: 0, scale: 0.8 }}
-                whileInView={reduceMotion ? undefined : { opacity: 1, scale: 1 }}
-                transition={reduceMotion ? undefined : { duration: 0.4, delay: index * 0.1 }}
+                initial={{ opacity: 0, scale: reduceMotion ? 1 : 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: reduceMotion ? 0.2 : 0.4, delay: reduceMotion ? 0 : index * 0.1 }}
                 viewport={{ once: true }}
+                style={{ willChange: 'opacity, transform' }}
                 className="text-center"
               >
                 <div className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
@@ -571,6 +549,7 @@ const Home = () => {
               <motion.div
                 key={exp.title}
                 variants={itemVariants}
+                style={{ willChange: 'opacity, transform' }}
                 className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100"
               >
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
@@ -607,10 +586,11 @@ const Home = () => {
             {skillCategories.map((group) => (
               <div key={group.title}>
                 <motion.div
-                  initial={reduceMotion ? {opacity: 1, y: 0} : { opacity: 0, y: 10 }}
-                  whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={reduceMotion ? {undefined} : { duration: 0.4 }}
+                  transition={{ duration: reduceMotion ? 0.2 : 0.4 }}
+                  style={{ willChange: 'opacity, transform' }}
                 >
                   <h3 className="align-center text-center text-sm uppercase tracking-widest mb-4">{group.title}</h3>
                 </motion.div>
@@ -620,11 +600,12 @@ const Home = () => {
                   return (
                     <motion.div
                       key={name}
-                      initial={reduceMotion ? {opacity: 1, y: 0} : { opacity: 0, y: 10 }}
-                      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+                      initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
-                      transition={reduceMotion ? undefined : { duration: 0.4 }}
+                      transition={{ duration: reduceMotion ? 0.2 : 0.4 }}
                       whileHover={reduceMotion ? undefined : { y: -2, scale: 1.03 }}
+                      style={{ willChange: 'opacity, transform' }}
                       className="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 hover:border-white/20 backdrop-blur-sm shadow-sm"
                     >
                       <i className={`${iconClass} text-xl`} />
@@ -646,10 +627,11 @@ const Home = () => {
 
           {/* Filter */}
           <motion.div
-            initial={reduceMotion ? {opacity: 1, y: 0} : { opacity: 0, y: 20 }}
-            whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-            transition={reduceMotion ? undefined : { duration: 0.6 }}
+            initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: reduceMotion ? 0.2 : 0.6 }}
             viewport={{ once: true }}
+            style={{ willChange: 'opacity, transform' }}
             className="flex flex-wrap justify-center gap-4 mt-10"
           >
             {categories.map((category) => (
@@ -658,6 +640,8 @@ const Home = () => {
                 onClick={() => setFilter(category.id)}
                 whileHover={reduceMotion ? undefined : { scale: 1.05 }}
                 whileTap={reduceMotion ? undefined : { scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                style={{ willChange: 'transform' }}
                 className={`px-6 py-3 rounded-full font-medium transition-all duration-200 ${
                   filter === category.id
                     ? "bg-gray-900 text-white shadow-lg"
@@ -671,20 +655,31 @@ const Home = () => {
 
           {/* Grid */}
           <motion.div
-            initial={reduceMotion ? {opacity: 1} : "hidden"}
-            whileInView={reduceMotion ? undefined : "visible"}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
             className="mt-16 grid grid-cols-1 lg:grid-cols-2  gap-8"
           >
             {filteredProjects.map((project, index) => (
-              <motion.div key={project.title} initial={reduceMotion ? {opacity: 1, y: 0} : { opacity: 0, y: 30 }} whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={reduceMotion ? undefined : { duration: 0.6, delay: index * 0.05 }} viewport={{ once: true }} >
+              <motion.div 
+                key={project.title} 
+                initial={{ opacity: 0, y: reduceMotion ? 0 : 30 }} 
+                whileInView={{ opacity: 1, y: 0 }} 
+                transition={{ duration: reduceMotion ? 0.2 : 0.6, delay: reduceMotion ? 0 : index * 0.05 }} 
+                viewport={{ once: true }}
+                style={{ willChange: 'opacity, transform' }}
+              >
                 <ProjectCard project={project} index={index} />
               </motion.div>
             ))}
           </motion.div>
 
           {filteredProjects.length === 0 && (
-            <motion.div initial={reduceMotion ? {opacity: 1, y: 0} : { opacity: 0 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} className="text-center py-20">
+            <motion.div 
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              className="text-center py-20"
+            >
               <div className="text-6xl mb-4">🔍</div>
               <h3 className="text-2xl font-semibold text-gray-900 mb-2">No projects found</h3>
               <p className="text-gray-600">Try selecting a different category to see more projects.</p>
