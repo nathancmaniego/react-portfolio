@@ -351,7 +351,7 @@ const Home = () => {
                 <AiOutlineArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
               <Button
-                href="/Nathan_Maniego_resume_2027.pdf"
+                href="https://drive.google.com/file/d/1ZCCvQgkCircQr9MiddX2ouyTfzfdrwjQ/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 variant="outline" 
@@ -382,7 +382,7 @@ const Home = () => {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.2, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                className="text-gray-400 hover:text-gray-800 transition-colors"
+                className="text-gray-400 hover:text-gray-800 transition-colors pb-20"
               >
                 <AiFillGithub className="w-6 h-6" />
               </motion.a>
