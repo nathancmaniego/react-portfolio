@@ -1,20 +1,24 @@
 "use client";
-import { motion, MotionConfig } from "framer-motion";
 import Image from "next/image";
-import { useState, useEffect } from "react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import Button from "../components/Button";
-import SectionTitle from "../components/SectionTitle";
-import ProjectCard from "../components/ProjectCard";
-import { AiFillLinkedin, AiFillGithub, AiOutlineMail, AiOutlineArrowRight, AiOutlinePhone, AiOutlineEnvironment } from "react-icons/ai";
+import { useState } from "react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import Button from "@/components/Button";
+import SectionTitle from "@/components/SectionTitle";
+import ProjectCard from "@/components/ProjectCard";
+import { useInView } from "@/hooks/useInView";
+import { AiFillLinkedin, AiFillGithub, AiOutlineMail, AiOutlineArrowRight } from "react-icons/ai";
 
+// Images
+import avatar from "@/assets/IMG_8030.JPG";
+import avatar2 from "@/assets/IMG_9460.JPG";
 import uoft from "@/assets/logos/uoft.png";
 import datapro from "@/assets/logos/321datapro.jpg";
 import ops from "@/assets/logos/ops.png";
 import uoftai from "@/assets/logos/uoftai.png";
 import e4x from "@/assets/logos/E4X-icon.png";
 
+// Data
 const experiences = [
   {
     title: "Computer Science Student",
@@ -25,7 +29,7 @@ const experiences = [
   },
   {
     title: "Software Engineer Intern",
-    company: "321DataPro Inc."  ,
+    company: "321DataPro Inc.",
     period: "July 2025 - August 2025",
     description: "Engineered scalable full-stack systems at 321DataPro Inc., optimizing performance across React, Express, and PostgreSQL services.",
     logo: datapro,
@@ -44,7 +48,6 @@ const experiences = [
     description: "Managed partnerships with universities and organizations to promote UofTAI's AI initiatives and resources.",
     logo: uoftai,
   },
-  
   {
     title: "Web Developer",
     company: "Empowered4x",
@@ -60,17 +63,14 @@ const projects = [
     description: "Find your perfect dorm with Dormigo, a platform that allows you to find your perfect dorm based on your preferences and budget.",
     technologies: ["React", "Node.js", "FastAPI", "Selenium", "BeautifulSoup"],
     githubUrl: "https://github.com/nathancmaniego/deerhacks-iv",
-    featured: false,
     category: "personal",
-    emoji: "📝",
+    emoji: "🏠",
   },
   {
     title: "MYSH Linux Shell",
     description: "A custom Linux shell written in C that supports basic commands like cd, ls, and pwd. It also supports background processes and job control.",
     technologies: ["C", "Linux"],
-    githubUrl: "null",
     liveUrl: "https://www.youtube.com/watch?v=SwGaXpNMV9M",
-    featured: false,
     category: "school",
     emoji: "🐧",
   },
@@ -78,308 +78,169 @@ const projects = [
     title: "Connect4 AI Agent",
     description: "A Connect4 AI agent that uses a minimax algorithm to find the best move. It also supports a GUI that allows you to play against the AI.",
     technologies: ["Python", "Minimax"],
-    featured: false,
     category: "school",
-    emoji: "🔍",
+    emoji: "🎮",
   },
   {
     title: "Project Bleu",
     description: "Random Forest ML model for stormwater management with 80% retention rate. Won Honourable Mention Award at the University of Toronto Engineering Competition.",
     technologies: ["Python", "Pandas", "Scikit-learn", "React", "Node.js"],
     githubUrl: "https://github.com/nathancmaniego/CoMHackathon-ProjectBleu",
-    featured: false,
     category: "personal",
     emoji: "🌧️",
   },
-
   {
     title: "MS Paint Inspired Clone",
     description: "Java-based paint application with real-time feedback and Ollama API integration. Features include drawing tools, color picker, and AI-powered image generation.",
     technologies: ["Java", "JavaFX", "Ollama3", "Maven"],
-    liveUrl: null,
-    featured: false,
     category: "school",
-    emoji: "🖌️",
+    emoji: "🎨",
   },
   {
     title: "Personal Portfolio Website",
     description: "Modern, responsive portfolio website built with Next.js and Framer Motion. Features smooth animations, dark mode, and optimized performance.",
-    technologies: ["Next.js", "React", "Framer Motion", "Tailwind CSS", "TypeScript"],
+    technologies: ["Next.js", "React", "Tailwind CSS"],
     liveUrl: "https://nathanmaniego.com",
-    featured: false,
     category: "personal",
-    emoji: "🖼️",
+    emoji: "💼",
   },
   {
     title: "Raptors 2024-2025 Season Predictions",
     description: "Predicting the Raptors' 2024-2025 season performance using machine learning and historical data.",
     technologies: ["Python", "Pandas", "Scikit-learn", "Matplotlib"],
     githubUrl: "https://github.com/nathancmaniego/toronto_raptors_player_consistency",
-    liveUrl: null,
-    featured: false,
     category: "personal",
     emoji: "🏀",
   },
 ];
 
-const iconMap = {
-  python: "devicon-python-plain colored",
-  java: "devicon-java-plain colored",
-  cpp: "devicon-cplusplus-plain colored",
-  typescript: "devicon-typescript-plain colored",
-  javascript: "devicon-javascript-plain colored",
-  sql: "devicon-mysql-plain colored",
-  csharp: "devicon-csharp-plain colored",
-  html: "devicon-html5-plain colored",
-  css: "devicon-css3-plain colored",
-  bash: "devicon-bash-plain",
-  react: "devicon-react-original colored",
-  nextjs: "devicon-nextjs-original",
-  nodejs: "devicon-nodejs-plain colored",
-  express: "devicon-express-original",
-  flask: "devicon-flask-original",
-  springboot: "devicon-spring-original colored",
-  redux: "devicon-redux-original colored",
-  tailwindcss: "devicon-tailwindcss-plain colored",
-  postgresql: "devicon-postgresql-plain colored",
-  mysql: "devicon-mysql-plain colored",
-  firebase: "devicon-firebase-plain colored",
-  mongodb: "devicon-mongodb-plain colored",
-  aws: "devicon-amazonwebservices-plain colored",
-  docker: "devicon-docker-plain colored",
-  github: "devicon-github-original",
-  linux: "devicon-linux-plain colored",
-  git: "devicon-git-plain colored",
-};
+const skillCategories = [
+  {
+    title: "Languages",
+    items: [
+      { name: "Python", icon: "devicon-python-plain colored" },
+      { name: "Java", icon: "devicon-java-plain colored" },
+      { name: "C++", icon: "devicon-cplusplus-plain colored" },
+      { name: "C#", icon: "devicon-csharp-plain colored" },
+      { name: "TypeScript", icon: "devicon-typescript-plain colored" },
+      { name: "JavaScript", icon: "devicon-javascript-plain colored" },
+      { name: "HTML5", icon: "devicon-html5-plain colored" },
+      { name: "CSS3", icon: "devicon-css3-plain colored" },
+      { name: "SQL", icon: "devicon-mysql-plain colored" },
+      { name: "Bash", icon: "devicon-bash-plain" },
+    ],
+  },
+  {
+    title: "Frameworks & Libraries",
+    items: [
+      { name: "React", icon: "devicon-react-original colored" },
+      { name: "Next.js", icon: "devicon-nextjs-original" },
+      { name: "Node.js", icon: "devicon-nodejs-plain colored" },
+      { name: "Express", icon: "devicon-express-original" },
+      { name: "Flask", icon: "devicon-flask-original" },
+      { name: "Spring Boot", icon: "devicon-spring-original colored" },
+      { name: "Redux", icon: "devicon-redux-original colored" },
+      { name: "TailwindCSS", icon: "devicon-tailwindcss-plain colored" },
+    ],
+  },
+  {
+    title: "Databases & Cloud",
+    items: [
+      { name: "PostgreSQL", icon: "devicon-postgresql-plain colored" },
+      { name: "MySQL", icon: "devicon-mysql-plain colored" },
+      { name: "Firebase", icon: "devicon-firebase-plain colored" },
+      { name: "MongoDB", icon: "devicon-mongodb-plain colored" },
+      { name: "AWS", icon: "devicon-amazonwebservices-plain-wordmark colored" },
+      { name: "Docker", icon: "devicon-docker-plain colored" },
+      { name: "GitHub Actions", icon: "devicon-github-original" },
+    ],
+  },
+];
 
-{/* Render example */}
-<i className={`${iconMap.python} text-3xl`} title="Python"></i>
+const stats = [
+  { number: "10+", label: "Projects Completed" },
+  { number: "2", label: "Years Experience" },
+  { number: "5+", label: "Technologies Mastered" },
+  { number: "∞", label: "Cups of Matcha" },
+];
 
+const categories = [
+  { id: "all", name: "All" },
+  { id: "personal", name: "Personal" },
+  { id: "school", name: "School" },
+];
 
+// Reusable animated section wrapper
+function AnimatedSection({ children, className = "", delay = 0 }) {
+  const [ref, isVisible] = useInView({ threshold: 0.1 });
+  return (
+    <div
+      ref={ref}
+      className={`fade-in ${isVisible ? "visible" : ""} ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  );
+}
 
-import avatar from "@/assets/IMG_8030.JPG";
-import avatar2 from "@/assets/IMG_9460.JPG";
-
-
-const Home = () => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  const reduceMotion = isMobile;
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: reduceMotion ? 0 : 0.1,
-        delayChildren: reduceMotion ? 0 : 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: reduceMotion ? 0 : 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: reduceMotion ? 0.2 : 0.6,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const stats = [
-    { number: "10+", label: "Projects Completed" },
-    { number: "2", label: "Years Experience" },
-    { number: "5+", label: "Technologies Mastered" },
-    { number: "∞", label: "Cups of Matcha" },
-  ];
-  
-
-  // Skillset data (updated for Devicon + resume alignment)
-  const skillCategories = [
-    {
-      title: "Languages",
-      items: [
-        { name: "Python", icon: "python" },
-        { name: "Java", icon: "java" },
-        { name: "C++", icon: "cpp" },
-        { name: "C#", icon: "csharp" },
-        { name: "TypeScript", icon: "typescript" },
-        { name: "JavaScript", icon: "javascript" },
-        { name: "HTML5", icon: "html" },
-        { name: "CSS3", icon: "css" },
-        { name: "SQL", icon: "sql" },
-        { name: "Bash", icon: "bash" },
-        { name: "Assembly (RISC-V)", icon: "assembly" },
-      ],
-    },
-    {
-      title: "Frameworks & Libraries",
-      items: [
-        { name: "React", icon: "react" },
-        { name: "Next.js", icon: "nextjs" },
-        { name: "Node.js", icon: "nodejs" },
-        { name: "Express", icon: "express" },
-        { name: "Flask", icon: "flask" },
-        { name: "Spring Boot", icon: "springboot" },
-        { name: "Redux", icon: "redux" },
-        { name: "TailwindCSS", icon: "tailwindcss" },
-      ],
-    },
-    {
-      title: "Databases & Cloud",
-      items: [
-        { name: "PostgreSQL", icon: "postgresql" },
-        { name: "MySQL", icon: "mysql" },
-        { name: "Firebase", icon: "firebase" },
-        { name: "MongoDB", icon: "mongodb" },
-        { name: "AWS", icon: "aws" },
-        { name: "Docker", icon: "docker" },
-        { name: "GitHub Actions", icon: "github" },
-      ],
-    },
-  ];
-
-  
-  // Projects (full grid)
+export default function Home() {
   const [filter, setFilter] = useState("all");
-  
-  const categories = [
-    { id: "all", name: "All Projects" },
-    { id: "personal", name: "Personal Projects" },
-    { id: "school", name: "School Projects" },
-    // { id: "desktop", name: "Desktop Apps" },
-  ];
-  const filteredProjects = filter === "all" ? projects : projects.filter((project) => project.category === filter);
-
-  // Contact state & data
-  const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitStatus("success");
-      setFormData({ name: "", email: "", subject: "", message: "" });
-    }, 2000);
-  };
-  const contactInfo = [
-    { icon: AiOutlineMail, title: "Email", value: "nathancarlomaniego@gmail.com", href: "mailto:nathancarlomaniego@gmail.com", color: "text-red-500" },
-    { icon: AiOutlinePhone, title: "Phone", value: "+1 (555) 123-4567", href: "tel:+15551234567", color: "text-green-500" },
-    { icon: AiOutlineEnvironment, title: "Location", value: "Toronto, Ontario, Canada", href: "#", color: "text-blue-500" },
-  ];
-  const socialLinks = [
-    { icon: AiFillLinkedin, name: "LinkedIn", href: "https://www.linkedin.com/in/nathanmaniego/", color: "hover:text-blue-600" },
-    { icon: AiFillGithub, name: "GitHub", href: "https://github.com/nathancmaniego", color: "hover:text-gray-800" },
-  ];
+  const filteredProjects = filter === "all" 
+    ? projects 
+    : projects.filter((p) => p.category === filter);
 
   return (
-    
-    <MotionConfig reducedMotion={reduceMotion ? "always" : "never"}>
-    <div className="min-h-screen bg-white">
-      <Navbar/>
+    <>
+
       
-      {/* Hero Section */}
-      <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 md:pt-24">
-        {/* Background Elements */}
-
-
-        <div className="container mx-auto px-6 lg:px-8">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            style={{ willChange: 'opacity' }}
-            className="text-center max-w-4xl mx-auto"
-          >
+      <Navbar />
+      
+      <main id="main-content" className="min-h-screen bg-white">
+        {/* ==================== HERO SECTION ==================== */}
+        <section 
+          id="home" 
+          className="min-h-screen flex items-center justify-center pt-16 pb-20"
+          aria-label="Introduction"
+        >
+          <div className="max-w-4xl mx-auto px-6 text-center">
             {/* Avatar */}
-            <motion.div
-              variants={itemVariants}
-              style={{ willChange: 'opacity, transform' }}
-              className="mb-8"
-            >
-              <div className="relative inline-block p-5">
-                <motion.div
-                  whileHover={reduceMotion ? undefined : { scale: 1.05 }}
-                  transition={{ duration: 0.2 }}
-                  style={{ willChange: 'transform' }}
-                  className="relative"
-                >
-                  <Image
-                    src={avatar}
-                    alt="Nathan Maniego"
-                    width={400}
-                    height={400}
-                    className="border-4 border-white rounded-2xl shadow-2xl z-2"
-                    priority
-                  />
-                  <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-400 to-purple-400 ${isMobile ? 'opacity-0' : 'opacity-0 blur-xl'} z-1`} />
-                </motion.div>
+            <div className="hero-animate hero-animate-delay-1 mb-8">
+              <div className="relative inline-block">
+                <Image
+                  src={avatar}
+                  alt="Nathan Maniego"
+                  width={180}
+                  height={180}
+                  className="rounded-2xl shadow-xl border-4 border-white"
+                  priority
+                />
               </div>
-            </motion.div>
+            </div>
 
             {/* Name */}
-            <motion.h1
-              variants={itemVariants}
-              style={{ willChange: 'opacity, transform' }}
-              className="text-5xl md:text-7xl font-bold text-gray-900 mb-4"
-            >
+            <h1 className="hero-animate hero-animate-delay-2 text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-4">
               Nathan Maniego
-            </motion.h1>
+            </h1>
 
             {/* Title */}
-            <motion.h2
-              variants={itemVariants}
-              style={{ willChange: 'opacity, transform' }}
-              className="text-2xl md:text-3xl text-gray-600 mb-6 font-medium"
-            >
+            <p className="hero-animate hero-animate-delay-3 text-xl sm:text-2xl text-gray-600 mb-6 font-medium">
               Computer Science Student & Developer
-            </motion.h2>
+            </p>
 
             {/* Description */}
-            <motion.p
-              variants={itemVariants}
-              style={{ willChange: 'opacity, transform' }}
-              className="text-lg md:text-xl text-gray-500 mb-8 max-w-2xl mx-auto leading-relaxed"
-            >
+            <p className="hero-animate hero-animate-delay-4 text-base sm:text-lg text-gray-500 mb-8 max-w-2xl mx-auto leading-relaxed">
               Passionate about building innovative solutions and exploring emerging technologies. 
               Currently studying Computer Science at the University of Toronto.
-            </motion.p>
+            </p>
 
             {/* CTA Buttons */}
-            <motion.div
-              variants={itemVariants}
-              style={{ willChange: 'opacity, transform' }}
-              className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
-            >
-              <Button
-                href="#experience"
-                variant="primary"
-                size="lg"
-                className="group"
-              >
+            <div className="hero-animate hero-animate-delay-5 flex flex-col sm:flex-row gap-3 justify-center mb-10">
+              <Button href="#projects" variant="primary" size="lg">
                 View My Work
-                <AiOutlineArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                <AiOutlineArrowRight className="ml-2 w-4 h-4" aria-hidden="true" />
               </Button>
-              <Button
+              <Button 
                 href="https://drive.google.com/file/d/1ZCCvQgkCircQr9MiddX2ouyTfzfdrwjQ/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -388,312 +249,302 @@ const Home = () => {
               >
                 View Resume
               </Button>
-            </motion.div>
+            </div>
 
             {/* Social Links */}
-            <motion.div
-              variants={itemVariants}
-              style={{ willChange: 'opacity, transform' }}
-              className="flex justify-center space-x-6"
-            >
-              <motion.a
+            <div className="hero-animate hero-animate-delay-5 flex justify-center gap-4">
+              <a
                 href="https://www.linkedin.com/in/nathanmaniego/"
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={reduceMotion ? undefined : { scale: 1.1 }}
-                whileTap={reduceMotion ? undefined : { scale: 0.95 }}
-                transition={{ duration: 0.2 }}
-                style={{ willChange: 'transform' }}
-                className="text-gray-400 hover:text-blue-600 transition-colors"
+                className="p-2 text-gray-400 hover:text-blue-600 transition-colors icon-hover"
+                aria-label="LinkedIn Profile"
               >
                 <AiFillLinkedin className="w-6 h-6" />
-              </motion.a>
-              <motion.a
+              </a>
+              <a
                 href="https://github.com/nathancmaniego"
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={reduceMotion ? undefined : { scale: 1.1 }}
-                whileTap={reduceMotion ? undefined : { scale: 0.95 }}
-                transition={{ duration: 0.2 }}
-                style={{ willChange: 'transform' }}
-                className="text-gray-400 hover:text-gray-800 transition-colors pb-20"
+                className="p-2 text-gray-400 hover:text-gray-900 transition-colors icon-hover"
+                aria-label="GitHub Profile"
               >
                 <AiFillGithub className="w-6 h-6" />
-              </motion.a>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      
-      {/* About Section */}
-      <section id="about" className="py-20 bg-gray-50 scroll-mt-24">
-        <div className="container mx-auto px-6 lg:px-8">
-          <SectionTitle
-            title="About Me"
-            subtitle="Passionate developer with a love for creating meaningful solutions"
-          />
-
-          <div className="max-w-4xl mx-auto mt-16">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-                            {/* Image */}
-            <motion.div
-                initial={{ opacity: 0, x: reduceMotion ? 0 : -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: reduceMotion ? 0.2 : 0.6 }}
-                viewport={{ once: true, margin: "-100px" }}
-                style={{ willChange: 'opacity, transform' }}
+              </a>
+              <a
+                href="mailto:nathancarlomaniego@gmail.com"
+                className="p-2 text-gray-400 hover:text-red-500 transition-colors icon-hover"
+                aria-label="Send Email"
               >
-                <div className="relative">
-                <div className={`absolute inset-0 rounded-2xl from-blue-400 to-purple-400 ${isMobile ? 'opacity-0' : 'opacity-20 blur-xl'} z-[0]`} />
+                <AiOutlineMail className="w-6 h-6" />
+              </a>
+            </div>
+          </div>
+        </section>
 
-                  <Image
-                    src={avatar2}
-                    alt="Nathan Maniego"
-                    width={400}
-                    height={400}
-                    className="rounded-2xl shadow-2xl mx-auto"
-                    loading="lazy"
-                  />
-                </div>
-              </motion.div>
+        {/* ==================== ABOUT SECTION ==================== */}
+        <section 
+          id="about" 
+          className="py-20 bg-gray-50 section-offset"
+          aria-labelledby="about-title"
+        >
+          <div className="max-w-5xl mx-auto px-6">
+            <SectionTitle
+              title="About Me"
+              subtitle="Passionate developer with a love for creating meaningful solutions"
+            />
+
+            <div className="mt-12 grid md:grid-cols-2 gap-10 items-center">
+              {/* Image */}
+              <AnimatedSection className="order-2 md:order-1">
+                <Image
+                  src={avatar2}
+                  alt="Nathan Maniego"
+                  width={400}
+                  height={400}
+                  className="rounded-2xl shadow-lg mx-auto"
+                />
+              </AnimatedSection>
 
               {/* Text Content */}
-              
-              <motion.div
-                initial={{ opacity: 0, x: reduceMotion ? 0 : -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: reduceMotion ? 0.2 : 0.6 }}
-                viewport={{ once: true }}
-                style={{ willChange: 'opacity, transform' }}
-              >
-                <h3 className="text-2xl font-semibold text-gray-900 mb-6 lg:text-left text-center">
+              <AnimatedSection className="order-1 md:order-2" delay={100}>
+                <h3 className="text-2xl font-semibold text-gray-900 mb-5 text-center md:text-left">
                   Hello! I'm Nathan
                 </h3>
-                <div className="space-y-4 text-gray-600 leading-relaxed lg:text-left text-center">
-                  <p className="lg:text-left text-center">
+                <div className="space-y-4 text-gray-600 leading-relaxed text-center md:text-left">
+                  <p>
                     I'm a third-year Computer Science student at the University of Toronto 
                     with a passion for building innovative solutions and exploring emerging technologies.
                   </p>
-                  <p className="lg:text-left text-center">
+                  <p>
                     My journey in tech started with curiosity about how things work, and it has 
                     evolved into a love for creating applications that solve real-world problems. 
                     I enjoy the entire development process, from ideation to deployment.
                   </p>
-                  <p className="lg:text-left text-center">
+                  <p>
                     When I'm not coding, you can find me exploring new technologies, contributing 
                     to open-source projects, or working on personal projects that challenge me 
                     to learn and grow. Sometimes I'm also found playing basketball, lifting weights, or eating.
                   </p>
                 </div>
-              </motion.div>
-
-
+              </AnimatedSection>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-
-
-
-      {/* Stats Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: reduceMotion ? 0 : 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: reduceMotion ? 0.2 : 0.6 }}
-            viewport={{ once: true }}
-            style={{ willChange: 'opacity, transform' }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto"
-          >
-            {stats.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, scale: reduceMotion ? 1 : 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: reduceMotion ? 0.2 : 0.4, delay: reduceMotion ? 0 : index * 0.1 }}
-                viewport={{ once: true }}
-                style={{ willChange: 'opacity, transform' }}
-                className="text-center"
-              >
-                <div className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-                  {stat.number}
-                </div>
-                <div className="text-gray-600 font-medium">
-                  {stat.label}
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Experience Section */}
-      <section id="experience" className="py-20 bg-gray-50 scroll-mt-24">
-        <div className="container mx-auto px-6 lg:px-8">
-          <SectionTitle
-            title="Experience & Education"
-            subtitle="My journey in technology and education"
-          />
-
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="mt-16 space-y-8"
-          >
-            {experiences.map((exp, index) => (
-              <motion.div
-                key={exp.title}
-                variants={itemVariants}
-                style={{ willChange: 'opacity, transform' }}
-                className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100"
-              >
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                  <div className="flex items-center gap-4">
-                    <Image src={exp.logo} alt={exp.company} className="rounded-full w-12 h-12 object-contain" />
-                    <div>
-                      <h3 className="text-xl font-semibold text-gray-900">
-                        {exp.title}
-                      </h3>
-                      <p className="text-gray-600 font-medium">
-                        {exp.company}
-                      </p>
+        {/* ==================== STATS SECTION ==================== */}
+        <section className="py-16 bg-white" aria-label="Quick stats">
+          <div className="max-w-4xl mx-auto px-6">
+            <AnimatedSection>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                {stats.map((stat, index) => (
+                  <div 
+                    key={stat.label} 
+                    className={`text-center stagger-${index + 1}`}
+                  >
+                    <div className="text-3xl md:text-4xl font-bold text-gray-900 mb-1">
+                      {stat.number}
+                    </div>
+                    <div className="text-sm text-gray-600 font-medium">
+                      {stat.label}
                     </div>
                   </div>
-                  <span className="text-gray-500 font-medium mt-2 md:mt-0">
-                    {exp.period}
-                  </span>
-                </div>
-                <p className="text-gray-600 leading-relaxed">
-                  {exp.description}
-                </p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Skillset Section */}
-      <section id="skills" className="py-24 scroll-mt-24">
-        <div className="container mx-auto px-6 lg:px-8">
-          <SectionTitle title="Professional Skillset" subtitle="Frameworks, languages and tools I use" />
-
-          <div className="mt-16 space-y-12">
-            {skillCategories.map((group) => (
-              <div key={group.title}>
-                <motion.div
-                  initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: reduceMotion ? 0.2 : 0.4 }}
-                  style={{ willChange: 'opacity, transform' }}
-                >
-                  <h3 className="align-center text-center text-sm uppercase tracking-widest mb-4">{group.title}</h3>
-                </motion.div>
-                <div className="flex flex-wrap gap-4 justify-center">
-                  {group.items.map(({ name, icon }) => {
-                  const iconClass = iconMap[icon];
-                  return (
-                    <motion.div
-                      key={name}
-                      initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: reduceMotion ? 0.2 : 0.4 }}
-                      whileHover={reduceMotion ? undefined : { y: -2, scale: 1.03 }}
-                      style={{ willChange: 'opacity, transform' }}
-                      className="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 hover:border-white/20 backdrop-blur-sm shadow-sm"
-                    >
-                      <i className={`${iconClass} text-xl`} />
-                      <span className="text-sm font-medium">{name}</span>
-                    </motion.div>
-                  );
-                })}
-                </div>
+                ))}
               </div>
-            ))}
+            </AnimatedSection>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Projects Section (full) */}
-      <section id="projects" className="py-20 bg-gray-50 scroll-mt-24">
-        <div className="container mx-auto px-6 lg:px-8">
-          <SectionTitle title="Projects" subtitle="Some of my recent work" />
+        {/* ==================== EXPERIENCE SECTION ==================== */}
+        <section 
+          id="experience" 
+          className="py-20 bg-gray-50 section-offset"
+          aria-labelledby="experience-title"
+        >
+          <div className="max-w-4xl mx-auto px-6">
+            <SectionTitle
+              title="Experience & Education"
+              subtitle="My journey in technology and education"
+            />
 
-          {/* Filter */}
-          <motion.div
-            initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: reduceMotion ? 0.2 : 0.6 }}
-            viewport={{ once: true }}
-            style={{ willChange: 'opacity, transform' }}
-            className="flex flex-wrap justify-center gap-4 mt-10"
-          >
-            {categories.map((category) => (
-              <motion.button
-                key={category.id}
-                onClick={() => setFilter(category.id)}
-                whileHover={reduceMotion ? undefined : { scale: 1.05 }}
-                whileTap={reduceMotion ? undefined : { scale: 0.95 }}
-                transition={{ duration: 0.2 }}
-                style={{ willChange: 'transform' }}
-                className={`px-6 py-3 rounded-full font-medium transition-all duration-200 ${
-                  filter === category.id
-                    ? "bg-gray-900 text-white shadow-lg"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                }`}
+            <div className="mt-12 space-y-5">
+              {experiences.map((exp, index) => (
+                <AnimatedSection key={exp.company} delay={index * 50}>
+                  <article className="bg-white rounded-xl p-6 border border-gray-100 card-hover">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                      <div className="flex items-center gap-4">
+                        <Image 
+                          src={exp.logo} 
+                          alt={`${exp.company} logo`}
+                          width={48}
+                          height={48}
+                          className="rounded-full object-contain flex-shrink-0"
+                        />
+                        <div>
+                          <h3 className="text-lg font-semibold text-gray-900">
+                            {exp.title}
+                          </h3>
+                          <p className="text-gray-600 font-medium">
+                            {exp.company}
+                          </p>
+                        </div>
+                      </div>
+                      <time className="text-sm text-gray-500 font-medium sm:text-right">
+                        {exp.period}
+                      </time>
+                    </div>
+                    <p className="mt-4 text-gray-600 leading-relaxed">
+                      {exp.description}
+                    </p>
+                  </article>
+                </AnimatedSection>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ==================== SKILLS SECTION ==================== */}
+        <section 
+          id="skills" 
+          className="py-20 bg-white section-offset"
+          aria-labelledby="skills-title"
+        >
+          <div className="max-w-5xl mx-auto px-6">
+            <SectionTitle 
+              title="Technical Skills" 
+              subtitle="Languages, frameworks and tools I work with" 
+            />
+
+            <div className="mt-12 space-y-10">
+              {skillCategories.map((group, groupIndex) => (
+                <AnimatedSection key={group.title} delay={groupIndex * 100}>
+                  <div>
+                    <h3 className="text-sm uppercase tracking-wider text-gray-500 font-semibold text-center mb-5">
+                      {group.title}
+                    </h3>
+                    <div 
+                      className="flex flex-wrap gap-2 justify-center"
+                      role="list"
+                      aria-label={group.title}
+                    >
+                      {group.items.map((skill) => (
+                        <div
+                          key={skill.name}
+                          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-50 border border-gray-100 skill-hover"
+                          role="listitem"
+                        >
+                          <i className={`${skill.icon} text-lg`} aria-hidden="true" />
+                          <span className="text-sm font-medium text-gray-700">
+                            {skill.name}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </AnimatedSection>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ==================== PROJECTS SECTION ==================== */}
+        <section 
+          id="projects" 
+          className="py-20 bg-gray-50 section-offset"
+          aria-labelledby="projects-title"
+        >
+          <div className="max-w-5xl mx-auto px-6">
+            <SectionTitle 
+              title="Projects" 
+              subtitle="Some of my recent work" 
+            />
+
+            {/* Filter Buttons */}
+            <AnimatedSection className="mt-10">
+              <div 
+                className="flex flex-wrap justify-center gap-2"
+                role="tablist"
+                aria-label="Filter projects by category"
               >
-                {category.name}
-              </motion.button>
-            ))}
-          </motion.div>
+                {categories.map((category) => (
+                  <button
+                    key={category.id}
+                    onClick={() => setFilter(category.id)}
+                    className={`px-5 py-2 rounded-full font-medium text-sm transition-colors btn-hover ${
+                      filter === category.id
+                        ? "bg-gray-900 text-white"
+                        : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-100"
+                    }`}
+                    role="tab"
+                    aria-selected={filter === category.id}
+                    aria-controls="projects-grid"
+                  >
+                    {category.name}
+                  </button>
+                ))}
+              </div>
+            </AnimatedSection>
 
-          {/* Grid */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="mt-16 grid grid-cols-1 lg:grid-cols-2  gap-8"
-          >
-            {filteredProjects.map((project, index) => (
-              <motion.div 
-                key={project.title} 
-                initial={{ opacity: 0, y: reduceMotion ? 0 : 30 }} 
-                whileInView={{ opacity: 1, y: 0 }} 
-                transition={{ duration: reduceMotion ? 0.2 : 0.6, delay: reduceMotion ? 0 : index * 0.05 }} 
-                viewport={{ once: true }}
-                style={{ willChange: 'opacity, transform' }}
-              >
-                <ProjectCard project={project} index={index} />
-              </motion.div>
-            ))}
-          </motion.div>
-
-          {filteredProjects.length === 0 && (
-            <motion.div 
-              initial={{ opacity: 0 }} 
-              animate={{ opacity: 1, y: 0 }} 
-              className="text-center py-20"
+            {/* Projects Grid */}
+            <div 
+              id="projects-grid"
+              className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-5"
+              role="tabpanel"
             >
-              <div className="text-6xl mb-4">🔍</div>
-              <h3 className="text-2xl font-semibold text-gray-900 mb-2">No projects found</h3>
-              <p className="text-gray-600">Try selecting a different category to see more projects.</p>
-            </motion.div>
-          )}
-        </div>
-      </section>
+              {filteredProjects.map((project, index) => (
+                <AnimatedSection key={project.title} delay={index * 50}>
+                  <ProjectCard project={project} />
+                </AnimatedSection>
+              ))}
+            </div>
 
+            {filteredProjects.length === 0 && (
+              <div className="text-center py-16">
+                <p className="text-4xl mb-3" role="img" aria-label="Magnifying glass">🔍</p>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">No projects found</h3>
+                <p className="text-gray-600">Try selecting a different category.</p>
+              </div>
+            )}
+          </div>
+        </section>
 
+        {/* ==================== CONTACT CTA SECTION ==================== */}
+        <section className="py-20 bg-white" aria-label="Contact">
+          <div className="max-w-3xl mx-auto px-6 text-center">
+            <AnimatedSection>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Let's Connect
+              </h2>
+              <p className="text-lg text-gray-600 mb-8 max-w-xl mx-auto">
+                I'm always open to new opportunities, collaborations, and conversations. 
+                Feel free to reach out!
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Button 
+                  href="mailto:nathancarlomaniego@gmail.com"
+                  variant="primary"
+                  size="lg"
+                >
+                  <AiOutlineMail className="mr-2 w-5 h-5" aria-hidden="true" />
+                  Get In Touch
+                </Button>
+                <Button 
+                  href="https://www.linkedin.com/in/nathanmaniego/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="outline"
+                  size="lg"
+                >
+                  <AiFillLinkedin className="mr-2 w-5 h-5" aria-hidden="true" />
+                  Connect on LinkedIn
+                </Button>
+              </div>
+            </AnimatedSection>
+          </div>
+        </section>
+      </main>
 
       <Footer />
-    </div>
-    </MotionConfig>
+    </>
   );
-};
-
-export default Home;
+}

@@ -1,6 +1,5 @@
 "use client";
-import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useInView } from "@/hooks/useInView";
 
 const SectionTitle = ({ 
   title, 
@@ -8,19 +7,7 @@ const SectionTitle = ({
   align = "center",
   className = "" 
 }) => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  const reduceMotion = isMobile;
+  const [ref, isVisible] = useInView({ threshold: 0.2 });
 
   const alignClasses = {
     left: "text-left",
@@ -29,37 +16,19 @@ const SectionTitle = ({
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: reduceMotion ? 0 : 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: reduceMotion ? 0.2 : 0.6 }}
-      viewport={{ once: true }}
-      style={{ willChange: 'opacity, transform' }}
-      className={`${alignClasses[align]} ${className}`}
+    <div
+      ref={ref}
+      className={`fade-in ${isVisible ? "visible" : ""} ${alignClasses[align]} ${className}`}
     >
-      <motion.h2
-        initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: reduceMotion ? 0.2 : 0.6, delay: reduceMotion ? 0 : 0.1 }}
-        viewport={{ once: true }}
-        style={{ willChange: 'opacity, transform' }}
-        className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4"
-      >
+      <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
         {title}
-      </motion.h2>
+      </h2>
       {subtitle && (
-        <motion.p
-          initial={{ opacity: 0, y: reduceMotion ? 0 : 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: reduceMotion ? 0.2 : 0.6, delay: reduceMotion ? 0 : 0.2 }}
-          viewport={{ once: true }}
-          style={{ willChange: 'opacity, transform' }}
-          className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto"
-        >
+        <p className="text-base md:text-lg text-gray-600 max-w-xl mx-auto">
           {subtitle}
-        </motion.p>
+        </p>
       )}
-    </motion.div>
+    </div>
   );
 };
 
