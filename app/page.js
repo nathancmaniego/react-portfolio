@@ -59,6 +59,14 @@ const experiences = [
 
 const projects = [
   {
+    title: "QUEST",
+    description: "QUEST is an AI RPG that builds your identity through real-life actions. Literally leveling up solo.",
+    technologies: ["Next.js", "FastAPI", "MongoDB Atlas", "LangGraph", "Backboard.io"],
+    liveUrl: "https://devpost.com/software/quest-jrow9d",
+    category: "personal",
+    emoji: "⚔️",
+  },
+  {
     title: "Dormigo",
     description: "Find your perfect dorm with Dormigo, a platform that allows you to find your perfect dorm based on your preferences and budget.",
     technologies: ["React", "Node.js", "FastAPI", "Selenium", "BeautifulSoup"],
@@ -210,8 +218,8 @@ export default function Home() {
                 <Image
                   src={avatar}
                   alt="Nathan Maniego"
-                  width={180}
-                  height={180}
+                  width={400}
+                  height={400}
                   className="rounded-2xl shadow-xl border-4 border-white"
                   priority
                 />
