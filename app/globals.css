@@ -5,8 +5,9 @@
 @import 'devicon/devicon.min.css';
 
 :root {
-  --background: #ffffff;
-  --foreground: #111827;
+  --background: #EFECE6;
+  --foreground: #161513;
+  --hairline: rgba(22, 21, 19, 0.12);
   --gray-50: #f9fafb;
   --gray-100: #f3f4f6;
   --gray-200: #e5e7eb;
@@ -59,16 +60,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--gray-100);
+  background: var(--background);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--gray-300);
+  background: rgba(22, 21, 19, 0.25);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--gray-400);
+  background: rgba(22, 21, 19, 0.4);
 }
 
 /* Focus styles for accessibility */
@@ -85,8 +86,8 @@ body {
 
 /* Selection styles */
 ::selection {
-  background-color: var(--gray-200);
-  color: var(--gray-900);
+  background-color: var(--foreground);
+  color: var(--background);
 }
 
 /* Skip to main content link for accessibility */
@@ -314,6 +315,7 @@ body {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 
 .line-clamp-3 {
@@ -321,13 +323,62 @@ body {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
 }
 
-/* Glass effect for navbar */
-.glass-nav {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+/* Editorial display type */
+.display-heading {
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 0.92;
+}
+
+/* Floating decorative accents (hero sparkle / bolt) */
+@keyframes floatSlow {
+  from {
+    transform: translateY(-4px) rotate(-4deg);
+  }
+  to {
+    transform: translateY(6px) rotate(5deg);
+  }
+}
+
+.float-slow {
+  animation: floatSlow 4s ease-in-out infinite alternate;
+}
+
+.float-slow-delayed {
+  animation: floatSlow 5s ease-in-out 0.8s infinite alternate-reverse;
+}
+
+/* Rotating circular text badge */
+@keyframes spinSlow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin-slow {
+  animation: spinSlow 18s linear infinite;
+}
+
+/* Circle-arrow link (e.g. "View All Work") */
+.arrow-link .arrow-circle {
+  transition: background-color 0.2s ease-out, color 0.2s ease-out;
+}
+
+.arrow-link:hover .arrow-circle {
+  background-color: var(--foreground);
+  color: var(--background);
+}
+
+.arrow-link .arrow-icon {
+  transition: transform 0.2s ease-out;
+}
+
+.arrow-link:hover .arrow-icon {
+  transform: translate(2px, -2px);
 }
 
 /* Section scroll margin for fixed navbar */

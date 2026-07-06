@@ -7,176 +7,20 @@ import Button from "@/components/Button";
 import SectionTitle from "@/components/SectionTitle";
 import ProjectCard from "@/components/ProjectCard";
 import { useInView } from "@/hooks/useInView";
-import { AiFillLinkedin, AiFillGithub, AiOutlineMail, AiOutlineArrowRight } from "react-icons/ai";
+import { AiFillLinkedin, AiOutlineMail, AiOutlinePaperClip} from "react-icons/ai";
 
 // Images
 import avatar from "@/assets/IMG_8030.JPG";
 import avatar2 from "@/assets/IMG_9460.JPG";
-import uoft from "@/assets/logos/uoft.png";
-import datapro from "@/assets/logos/321datapro.jpg";
-import ops from "@/assets/logos/ops.png";
-import uoftai from "@/assets/logos/uoftai.png";
-import e4x from "@/assets/logos/E4X-icon.png";
 
-// Data
-const experiences = [
-  {
-    title: "Computer Science Student",
-    company: "University of Toronto",
-    period: "September 2023 - Present",
-    description: "Pursuing Bachelor of Science in Computer Science with a minor in Business and Mathematics.",
-    logo: uoft,
-  },
-  {
-    title: "Software Engineer Intern",
-    company: "321DataPro Inc.",
-    period: "July 2025 - August 2025",
-    description: "Engineered scalable full-stack systems at 321DataPro Inc., optimizing performance across React, Express, and PostgreSQL services.",
-    logo: datapro,
-  },
-  {
-    title: "Software Developer",
-    company: "Ontario Public Service (OPS Brainworks)",
-    period: "May 2025 - August 2025",
-    description: "Developing and maintaining software solutions for the Ontario Public Service using React, TypeScript, Express, and PostgreSQL.",
-    logo: ops,
-  },
-  {
-    title: "Partnerships Associate",
-    company: "UofTAI",
-    period: "September 2024 - August 2025",
-    description: "Managed partnerships with universities and organizations to promote UofTAI's AI initiatives and resources.",
-    logo: uoftai,
-  },
-  {
-    title: "Web Developer",
-    company: "Empowered4x",
-    period: "February 2022 - August 2022",
-    description: "Developed and maintained websites for small businesses and startups using WordPress and custom HTML/CSS/JavaScript.",
-    logo: e4x,
-  },
-];
-
-const projects = [
-  {
-    title: "QUEST",
-    description: "QUEST is an AI RPG that builds your identity through real-life actions. Literally leveling up solo.",
-    technologies: ["Next.js", "FastAPI", "MongoDB Atlas", "LangGraph", "Backboard.io"],
-    liveUrl: "https://devpost.com/software/quest-jrow9d",
-    category: "personal",
-    emoji: "⚔️",
-  },
-  {
-    title: "Dormigo",
-    description: "Find your perfect dorm with Dormigo, a platform that allows you to find your perfect dorm based on your preferences and budget.",
-    technologies: ["React", "Node.js", "FastAPI", "Selenium", "BeautifulSoup"],
-    githubUrl: "https://github.com/nathancmaniego/deerhacks-iv",
-    category: "personal",
-    emoji: "🏠",
-  },
-  {
-    title: "MYSH Linux Shell",
-    description: "A custom Linux shell written in C that supports basic commands like cd, ls, and pwd. It also supports background processes and job control.",
-    technologies: ["C", "Linux"],
-    liveUrl: "https://www.youtube.com/watch?v=SwGaXpNMV9M",
-    category: "school",
-    emoji: "🐧",
-  },
-  {
-    title: "Connect4 AI Agent",
-    description: "A Connect4 AI agent that uses a minimax algorithm to find the best move. It also supports a GUI that allows you to play against the AI.",
-    technologies: ["Python", "Minimax"],
-    category: "school",
-    emoji: "🎮",
-  },
-  {
-    title: "Project Bleu",
-    description: "Random Forest ML model for stormwater management with 80% retention rate. Won Honourable Mention Award at the University of Toronto Engineering Competition.",
-    technologies: ["Python", "Pandas", "Scikit-learn", "React", "Node.js"],
-    githubUrl: "https://github.com/nathancmaniego/CoMHackathon-ProjectBleu",
-    category: "personal",
-    emoji: "🌧️",
-  },
-  {
-    title: "MS Paint Inspired Clone",
-    description: "Java-based paint application with real-time feedback and Ollama API integration. Features include drawing tools, color picker, and AI-powered image generation.",
-    technologies: ["Java", "JavaFX", "Ollama3", "Maven"],
-    category: "school",
-    emoji: "🎨",
-  },
-  {
-    title: "Personal Portfolio Website",
-    description: "Modern, responsive portfolio website built with Next.js and Framer Motion. Features smooth animations, dark mode, and optimized performance.",
-    technologies: ["Next.js", "React", "Tailwind CSS"],
-    liveUrl: "https://nathanmaniego.com",
-    category: "personal",
-    emoji: "💼",
-  },
-  {
-    title: "Raptors 2024-2025 Season Predictions",
-    description: "Predicting the Raptors' 2024-2025 season performance using machine learning and historical data.",
-    technologies: ["Python", "Pandas", "Scikit-learn", "Matplotlib"],
-    githubUrl: "https://github.com/nathancmaniego/toronto_raptors_player_consistency",
-    category: "personal",
-    emoji: "🏀",
-  },
-];
-
-const skillCategories = [
-  {
-    title: "Languages",
-    items: [
-      { name: "Python", icon: "devicon-python-plain colored" },
-      { name: "Java", icon: "devicon-java-plain colored" },
-      { name: "C++", icon: "devicon-cplusplus-plain colored" },
-      { name: "C#", icon: "devicon-csharp-plain colored" },
-      { name: "TypeScript", icon: "devicon-typescript-plain colored" },
-      { name: "JavaScript", icon: "devicon-javascript-plain colored" },
-      { name: "HTML5", icon: "devicon-html5-plain colored" },
-      { name: "CSS3", icon: "devicon-css3-plain colored" },
-      { name: "SQL", icon: "devicon-mysql-plain colored" },
-      { name: "Bash", icon: "devicon-bash-plain" },
-    ],
-  },
-  {
-    title: "Frameworks & Libraries",
-    items: [
-      { name: "React", icon: "devicon-react-original colored" },
-      { name: "Next.js", icon: "devicon-nextjs-original" },
-      { name: "Node.js", icon: "devicon-nodejs-plain colored" },
-      { name: "Express", icon: "devicon-express-original" },
-      { name: "Flask", icon: "devicon-flask-original" },
-      { name: "Spring Boot", icon: "devicon-spring-original colored" },
-      { name: "Redux", icon: "devicon-redux-original colored" },
-      { name: "TailwindCSS", icon: "devicon-tailwindcss-plain colored" },
-    ],
-  },
-  {
-    title: "Databases & Cloud",
-    items: [
-      { name: "PostgreSQL", icon: "devicon-postgresql-plain colored" },
-      { name: "MySQL", icon: "devicon-mysql-plain colored" },
-      { name: "Firebase", icon: "devicon-firebase-plain colored" },
-      { name: "MongoDB", icon: "devicon-mongodb-plain colored" },
-      { name: "AWS", icon: "devicon-amazonwebservices-plain-wordmark colored" },
-      { name: "Docker", icon: "devicon-docker-plain colored" },
-      { name: "GitHub Actions", icon: "devicon-github-original" },
-    ],
-  },
-];
-
-const stats = [
-  { number: "10+", label: "Projects Completed" },
-  { number: "2", label: "Years Experience" },
-  { number: "5+", label: "Technologies Mastered" },
-  { number: "∞", label: "Cups of Matcha" },
-];
-
-const categories = [
-  { id: "all", name: "All" },
-  { id: "personal", name: "Personal" },
-  { id: "school", name: "School" },
-];
+// Site content — edit data/content.js to update the portfolio
+import {
+  experiences,
+  projects,
+  skillCategories,
+  stats,
+  categories,
+} from "@/data/content";
 
 // Reusable animated section wrapper
 function AnimatedSection({ children, className = "", delay = 0 }) {
@@ -192,168 +36,180 @@ function AnimatedSection({ children, className = "", delay = 0 }) {
   );
 }
 
+// Circle-arrow link ("View All Work" style)
+function ArrowLink({ href, children, ...props }) {
+  return (
+    <a
+      href={href}
+      className="arrow-link inline-flex items-center gap-3 text-sm font-semibold text-ink"
+      {...props}
+    >
+      <span>{children}</span>
+      <span className="arrow-circle w-8 h-8 rounded-full border border-ink/20 flex items-center justify-center">
+        <svg className="arrow-icon w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24" aria-hidden="true">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M9 7h8v8" />
+        </svg>
+      </span>
+    </a>
+  );
+}
+
 export default function Home() {
   const [filter, setFilter] = useState("all");
-  const filteredProjects = filter === "all" 
-    ? projects 
+  const filteredProjects = filter === "all"
+    ? projects
     : projects.filter((p) => p.category === filter);
+  const year = new Date().getFullYear();
 
   return (
     <>
-
-      
       <Navbar />
-      
-      <main id="main-content" className="min-h-screen bg-white">
+
+      <main id="main-content" className="min-h-screen">
         {/* ==================== HERO SECTION ==================== */}
-        <section 
-          id="home" 
-          className="min-h-screen flex items-center justify-center pt-16 pb-20"
+        <section
+          id="home"
+          className="relative min-h-[100svh] flex flex-col px-6 pt-32 pb-10"
           aria-label="Introduction"
         >
-          <div className="max-w-4xl mx-auto px-6 text-center">
-            {/* Avatar */}
-            <div className="hero-animate hero-animate-delay-1 mb-8">
-              <div className="relative inline-block">
-                <Image
-                  src={avatar}
-                  alt="Nathan Maniego"
-                  width={400}
-                  height={400}
-                  className="rounded-2xl shadow-xl border-4 border-white"
-                  priority
-                />
-              </div>
+          {/* Giant display headline */}
+          <div className="flex-1 flex items-center justify-center">
+            <div className="hero-animate hero-animate-delay-1 relative text-center">
+              {/* Basketball accent */}
+              <svg
+                className="float-slow absolute -top-6 -left-3 sm:-top-12 sm:-left-14 w-9 sm:w-14 h-auto text-ink"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M2 12h20M12 2v20" />
+                <path d="M5 4.6c3.8 3.4 3.8 11.4 0 14.8M19 4.6c-3.8 3.4-3.8 11.4 0 14.8" />
+              </svg>
+
+              <h1 className="display-heading text-[clamp(3.25rem,13vw,10rem)] text-ink">
+                <span className="block">Nathan</span>
+                <span className="block sm:translate-x-12">Maniego</span>
+              </h1>
+
+              {/* Rotating circular badge sticker */}
+              <svg
+                className="absolute bottom-14 -right-3 sm:bottom-6 sm:-right-20 w-20 sm:w-28 h-auto text-ink"
+                viewBox="0 0 100 100"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <circle cx="50" cy="50" r="49" fill="var(--background)" />
+                <g className="spin-slow" style={{ transformOrigin: "50px 50px" }}>
+                  <defs>
+                    <path
+                      id="badge-circle"
+                      d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"
+                    />
+                  </defs>
+                  <text fontSize="9.5" fontWeight="600" letterSpacing="1">
+                    <textPath href="#badge-circle" textLength="236">
+                      SOFTWARE DEVELOPER • TORONTO • UOFT CS •
+                    </textPath>
+                  </text>
+                </g>
+                <path d="M50 43c.5 3.7 3 6.2 6.7 6.7-3.7.5-6.2 3-6.7 6.7-.5-3.7-3-6.2-6.7-6.7 3.7-.5 6.2-3 6.7-6.7z" />
+              </svg>
+
+              <p className="hero-animate hero-animate-delay-3 mt-8 text-[11px] sm:text-sm uppercase tracking-[0.25em] text-gray-500">
+                Computer Science @ University of Toronto
+              </p>
             </div>
+          </div>
 
-            {/* Name */}
-            <h1 className="hero-animate hero-animate-delay-2 text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-4">
-              Nathan Maniego
-            </h1>
-
-            {/* Title */}
-            <p className="hero-animate hero-animate-delay-3 text-xl sm:text-2xl text-gray-600 mb-6 font-medium">
-              Computer Science Student & Developer
+          {/* Bottom strip: ©year / portrait / tagline */}
+          <div className="hero-animate hero-animate-delay-4 w-full max-w-6xl mx-auto flex items-end justify-between gap-4">
+            <p className="text-2xl sm:text-4xl font-extrabold tracking-tight text-ink">
+              ©{year}
             </p>
-
-            {/* Description */}
-            <p className="hero-animate hero-animate-delay-4 text-base sm:text-lg text-gray-500 mb-8 max-w-2xl mx-auto leading-relaxed">
-              Passionate about building innovative solutions and exploring emerging technologies. 
-              Currently studying Computer Science at the University of Toronto.
+            <Image
+              src={avatar}
+              alt="Nathan Maniego"
+              className="w-28 sm:w-40 h-auto rounded-xl border-4 border-white shadow-lg -rotate-2 hover:rotate-0 transition-transform duration-300"
+              priority
+            />
+            <p className="text-[10px] sm:text-sm uppercase tracking-[0.2em] text-gray-500">
+              /Based in Toronto
             </p>
-
-            {/* CTA Buttons */}
-            <div className="hero-animate hero-animate-delay-5 flex flex-col sm:flex-row gap-3 justify-center mb-10">
-              <Button href="#projects" variant="primary" size="lg">
-                View My Work
-                <AiOutlineArrowRight className="ml-2 w-4 h-4" aria-hidden="true" />
-              </Button>
-              <Button 
-                href="https://drive.google.com/file/d/1ZCCvQgkCircQr9MiddX2ouyTfzfdrwjQ/view?usp=sharing"
-                target="_blank"
-                rel="noopener noreferrer"
-                variant="outline" 
-                size="lg"
-              >
-                View Resume
-              </Button>
-            </div>
-
-            {/* Social Links */}
-            <div className="hero-animate hero-animate-delay-5 flex justify-center gap-4">
-              <a
-                href="https://www.linkedin.com/in/nathanmaniego/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 text-gray-400 hover:text-blue-600 transition-colors icon-hover"
-                aria-label="LinkedIn Profile"
-              >
-                <AiFillLinkedin className="w-6 h-6" />
-              </a>
-              <a
-                href="https://github.com/nathancmaniego"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 text-gray-400 hover:text-gray-900 transition-colors icon-hover"
-                aria-label="GitHub Profile"
-              >
-                <AiFillGithub className="w-6 h-6" />
-              </a>
-              <a
-                href="mailto:nathancarlomaniego@gmail.com"
-                className="p-2 text-gray-400 hover:text-red-500 transition-colors icon-hover"
-                aria-label="Send Email"
-              >
-                <AiOutlineMail className="w-6 h-6" />
-              </a>
-            </div>
           </div>
         </section>
 
         {/* ==================== ABOUT SECTION ==================== */}
-        <section 
-          id="about" 
-          className="py-20 bg-gray-50 section-offset"
+        <section
+          id="about"
+          className="py-24 section-offset"
           aria-labelledby="about-title"
         >
-          <div className="max-w-5xl mx-auto px-6">
-            <SectionTitle
-              title="About Me"
-              subtitle="Passionate developer with a love for creating meaningful solutions"
-            />
+          <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-12 md:gap-10 items-stretch">
+            {/* Left: greeting + intro */}
+            <AnimatedSection className="flex flex-col justify-between gap-10">
+              <h2 id="about-title" className="text-6xl md:text-7xl font-extrabold tracking-tight text-ink">
+                Hey!
+              </h2>
+              <p className="text-lg font-medium leading-snug text-ink max-w-xs">
+                I'm Nathan, a third-year Computer Science student at the
+                University of Toronto, currently building full-stack products
+                and exploring machine learning.
+              </p>
+            </AnimatedSection>
 
-            <div className="mt-12 grid md:grid-cols-2 gap-10 items-center">
-              {/* Image */}
-              <AnimatedSection className="order-2 md:order-1">
-                <Image
-                  src={avatar2}
-                  alt="Nathan Maniego"
-                  width={400}
-                  height={400}
-                  className="rounded-2xl shadow-lg mx-auto"
-                />
-              </AnimatedSection>
+            {/* Center: portrait */}
+            <AnimatedSection delay={100} className="flex items-center justify-center">
+              <Image
+                src={avatar2}
+                alt="Nathan Maniego"
+                className="rounded-2xl w-full max-w-sm h-auto"
+              />
+            </AnimatedSection>
 
-              {/* Text Content */}
-              <AnimatedSection className="order-1 md:order-2" delay={100}>
-                <h3 className="text-2xl font-semibold text-gray-900 mb-5 text-center md:text-left">
-                  Hello! I'm Nathan
-                </h3>
-                <div className="space-y-4 text-gray-600 leading-relaxed text-center md:text-left">
-                  <p>
-                    I'm a third-year Computer Science student at the University of Toronto 
-                    with a passion for building innovative solutions and exploring emerging technologies.
-                  </p>
-                  <p>
-                    My journey in tech started with curiosity about how things work, and it has 
-                    evolved into a love for creating applications that solve real-world problems. 
-                    I enjoy the entire development process, from ideation to deployment.
-                  </p>
-                  <p>
-                    When I'm not coding, you can find me exploring new technologies, contributing 
-                    to open-source projects, or working on personal projects that challenge me 
-                    to learn and grow. Sometimes I'm also found playing basketball, lifting weights, or eating.
-                  </p>
-                </div>
-              </AnimatedSection>
-            </div>
+            {/* Right: bio + CTA */}
+            <AnimatedSection delay={200} className="flex flex-col justify-center gap-5">
+              <p className="text-sm text-gray-600 leading-relaxed">
+                My journey in tech started with curiosity about how things
+                work, and it has evolved into a love for creating applications
+                that solve real-world problems. I enjoy the entire development
+                process, from ideation to deployment.
+              </p>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                When I'm not coding, you can find me exploring new
+                technologies, contributing to open source, playing basketball,
+                lifting weights, or eating.
+              </p>
+              <div className="mt-2">
+                <ArrowLink href="mailto:nathancarlomaniego@gmail.com">
+                  Get in Touch
+                </ArrowLink>
+              </div>
+              <Button
+                href="https://drive.google.com/file/d/1ZCCvQgkCircQr9MiddX2ouyTfzfdrwjQ/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                >
+                  <AiOutlinePaperClip className="mr-2 w-5 h-5" aria-hidden="true" />
+                  Resume
+                </Button>
+            </AnimatedSection>
           </div>
         </section>
 
         {/* ==================== STATS SECTION ==================== */}
-        <section className="py-16 bg-white" aria-label="Quick stats">
-          <div className="max-w-4xl mx-auto px-6">
+        <section className="py-16" aria-label="Quick stats">
+          <div className="max-w-6xl mx-auto px-6">
             <AnimatedSection>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-10 border-t border-ink/10 pt-12">
                 {stats.map((stat, index) => (
-                  <div 
-                    key={stat.label} 
-                    className={`text-center stagger-${index + 1}`}
-                  >
-                    <div className="text-3xl md:text-4xl font-bold text-gray-900 mb-1">
+                  <div key={stat.label} className={`stagger-${index + 1}`}>
+                    <div className="display-heading text-4xl md:text-5xl text-ink mb-2">
                       {stat.number}
                     </div>
-                    <div className="text-sm text-gray-600 font-medium">
+                    <div className="text-xs uppercase tracking-[0.2em] text-gray-500">
                       {stat.label}
                     </div>
                   </div>
@@ -364,44 +220,50 @@ export default function Home() {
         </section>
 
         {/* ==================== EXPERIENCE SECTION ==================== */}
-        <section 
-          id="experience" 
-          className="py-20 bg-gray-50 section-offset"
+        <section
+          id="experience"
+          className="py-24 section-offset"
           aria-labelledby="experience-title"
         >
-          <div className="max-w-4xl mx-auto px-6">
-            <SectionTitle
-              title="Experience & Education"
-              subtitle="My journey in technology and education"
-            />
+          <div className="max-w-6xl mx-auto px-6">
+            <SectionTitle title="Experience" />
 
-            <div className="mt-12 space-y-5">
+            <div className="mt-14 border-t border-ink/10">
               {experiences.map((exp, index) => (
                 <AnimatedSection key={exp.company} delay={index * 50}>
-                  <article className="bg-white rounded-xl p-6 border border-gray-100 card-hover">
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                  <article className="py-7 border-b border-ink/10">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                       <div className="flex items-center gap-4">
-                        <Image 
-                          src={exp.logo} 
-                          alt={`${exp.company} logo`}
-                          width={48}
-                          height={48}
-                          className="rounded-full object-contain flex-shrink-0"
-                        />
+                        {exp.logo ? (
+                          <Image
+                            src={exp.logo}
+                            alt={`${exp.company} logo`}
+                            width={44}
+                            height={44}
+                            className="rounded-full object-contain flex-shrink-0"
+                          />
+                        ) : (
+                          <div
+                            className="w-11 h-11 rounded-full bg-ink text-cream flex items-center justify-center font-bold flex-shrink-0"
+                            aria-hidden="true"
+                          >
+                            {exp.company.charAt(0)}
+                          </div>
+                        )}
                         <div>
-                          <h3 className="text-lg font-semibold text-gray-900">
+                          <h3 className="text-lg font-bold tracking-tight text-ink">
                             {exp.title}
                           </h3>
-                          <p className="text-gray-600 font-medium">
+                          <p className="text-sm text-gray-600 font-medium">
                             {exp.company}
                           </p>
                         </div>
                       </div>
-                      <time className="text-sm text-gray-500 font-medium sm:text-right">
+                      <time className="text-xs uppercase tracking-[0.15em] text-gray-500 sm:text-right shrink-0">
                         {exp.period}
                       </time>
                     </div>
-                    <p className="mt-4 text-gray-600 leading-relaxed">
+                    <p className="mt-3 text-sm text-gray-600 leading-relaxed max-w-2xl sm:pl-[60px]">
                       {exp.description}
                     </p>
                   </article>
@@ -412,37 +274,34 @@ export default function Home() {
         </section>
 
         {/* ==================== SKILLS SECTION ==================== */}
-        <section 
-          id="skills" 
-          className="py-20 bg-white section-offset"
+        <section
+          id="skills"
+          className="py-24 section-offset"
           aria-labelledby="skills-title"
         >
-          <div className="max-w-5xl mx-auto px-6">
-            <SectionTitle 
-              title="Technical Skills" 
-              subtitle="Languages, frameworks and tools I work with" 
-            />
+          <div className="max-w-6xl mx-auto px-6">
+            <SectionTitle title="Skills" />
 
-            <div className="mt-12 space-y-10">
+            <div className="mt-14 space-y-12">
               {skillCategories.map((group, groupIndex) => (
                 <AnimatedSection key={group.title} delay={groupIndex * 100}>
                   <div>
-                    <h3 className="text-sm uppercase tracking-wider text-gray-500 font-semibold text-center mb-5">
+                    <h3 className="text-xs uppercase tracking-[0.2em] text-gray-500 font-semibold mb-5">
                       {group.title}
                     </h3>
-                    <div 
-                      className="flex flex-wrap gap-2 justify-center"
+                    <div
+                      className="flex flex-wrap gap-2"
                       role="list"
                       aria-label={group.title}
                     >
                       {group.items.map((skill) => (
                         <div
                           key={skill.name}
-                          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-50 border border-gray-100 skill-hover"
+                          className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-ink/15 skill-hover"
                           role="listitem"
                         >
                           <i className={`${skill.icon} text-lg`} aria-hidden="true" />
-                          <span className="text-sm font-medium text-gray-700">
+                          <span className="text-sm font-medium text-ink">
                             {skill.name}
                           </span>
                         </div>
@@ -456,21 +315,29 @@ export default function Home() {
         </section>
 
         {/* ==================== PROJECTS SECTION ==================== */}
-        <section 
-          id="projects" 
-          className="py-20 bg-gray-50 section-offset"
+        <section
+          id="projects"
+          className="py-24 section-offset"
           aria-labelledby="projects-title"
         >
-          <div className="max-w-5xl mx-auto px-6">
-            <SectionTitle 
-              title="Projects" 
-              subtitle="Some of my recent work" 
+          <div className="max-w-6xl mx-auto px-6">
+            <SectionTitle
+              title={<>Featured<br />Projects</>}
+              action={
+                <ArrowLink
+                  href="https://github.com/nathancmaniego"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View All Work
+                </ArrowLink>
+              }
             />
 
             {/* Filter Buttons */}
             <AnimatedSection className="mt-10">
-              <div 
-                className="flex flex-wrap justify-center gap-2"
+              <div
+                className="flex flex-wrap gap-2"
                 role="tablist"
                 aria-label="Filter projects by category"
               >
@@ -480,8 +347,8 @@ export default function Home() {
                     onClick={() => setFilter(category.id)}
                     className={`px-5 py-2 rounded-full font-medium text-sm transition-colors btn-hover ${
                       filter === category.id
-                        ? "bg-gray-900 text-white"
-                        : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-100"
+                        ? "bg-ink text-cream"
+                        : "border border-ink/20 text-gray-600 hover:bg-ink/5"
                     }`}
                     role="tab"
                     aria-selected={filter === category.id}
@@ -494,9 +361,9 @@ export default function Home() {
             </AnimatedSection>
 
             {/* Projects Grid */}
-            <div 
+            <div
               id="projects-grid"
-              className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-5"
+              className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-14"
               role="tabpanel"
             >
               {filteredProjects.map((project, index) => (
@@ -509,7 +376,7 @@ export default function Home() {
             {filteredProjects.length === 0 && (
               <div className="text-center py-16">
                 <p className="text-4xl mb-3" role="img" aria-label="Magnifying glass">🔍</p>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">No projects found</h3>
+                <h3 className="text-xl font-bold text-ink mb-2">No projects found</h3>
                 <p className="text-gray-600">Try selecting a different category.</p>
               </div>
             )}
@@ -517,18 +384,18 @@ export default function Home() {
         </section>
 
         {/* ==================== CONTACT CTA SECTION ==================== */}
-        <section className="py-20 bg-white" aria-label="Contact">
-          <div className="max-w-3xl mx-auto px-6 text-center">
+        <section className="py-28" aria-label="Contact">
+          <div className="max-w-4xl mx-auto px-6 text-center">
             <AnimatedSection>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              <h2 className="display-heading text-[clamp(2.75rem,8vw,6rem)] text-ink mb-6">
                 Let's Connect
               </h2>
-              <p className="text-lg text-gray-600 mb-8 max-w-xl mx-auto">
-                I'm always open to new opportunities, collaborations, and conversations. 
-                Feel free to reach out!
+              <p className="text-base sm:text-lg text-gray-600 mb-10 max-w-xl mx-auto">
+                I'm always open to new opportunities, collaborations, and
+                conversations. Feel free to reach out!
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Button 
+                <Button
                   href="mailto:nathancarlomaniego@gmail.com"
                   variant="primary"
                   size="lg"
@@ -536,7 +403,7 @@ export default function Home() {
                   <AiOutlineMail className="mr-2 w-5 h-5" aria-hidden="true" />
                   Get In Touch
                 </Button>
-                <Button 
+                <Button
                   href="https://www.linkedin.com/in/nathanmaniego/"
                   target="_blank"
                   rel="noopener noreferrer"

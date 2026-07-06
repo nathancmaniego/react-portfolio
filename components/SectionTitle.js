@@ -1,11 +1,12 @@
 "use client";
 import { useInView } from "@/hooks/useInView";
 
-const SectionTitle = ({ 
-  title, 
-  subtitle, 
-  align = "center",
-  className = "" 
+const SectionTitle = ({
+  title,
+  subtitle,
+  action,
+  align = "left",
+  className = "",
 }) => {
   const [ref, isVisible] = useInView({ threshold: 0.2 });
 
@@ -18,16 +19,25 @@ const SectionTitle = ({
   return (
     <div
       ref={ref}
-      className={`fade-in ${isVisible ? "visible" : ""} ${alignClasses[align]} ${className}`}
+      className={`fade-in ${isVisible ? "visible" : ""} ${className}`}
     >
-      <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
-        {title}
-      </h2>
-      {subtitle && (
-        <p className="text-base md:text-lg text-gray-600 max-w-xl mx-auto">
-          {subtitle}
-        </p>
-      )}
+      <div
+        className={`flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 ${
+          align === "center" ? "sm:justify-center" : ""
+        }`}
+      >
+        <div className={alignClasses[align]}>
+          <h2 className="display-heading text-4xl sm:text-5xl md:text-6xl text-ink">
+            {title}
+          </h2>
+          {subtitle && (
+            <p className="mt-4 text-base text-gray-600 max-w-xl">
+              {subtitle}
+            </p>
+          )}
+        </div>
+        {action && <div className="shrink-0 pb-1">{action}</div>}
+      </div>
     </div>
   );
 };

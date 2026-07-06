@@ -28,8 +28,8 @@ const Footer = () => {
   ];
 
   return (
-    <footer 
-      className="bg-gray-50 border-t border-gray-100"
+    <footer
+      className="border-t border-ink/10"
       role="contentinfo"
     >
       <div className="max-w-6xl mx-auto px-6 py-12">
@@ -39,7 +39,7 @@ const Footer = () => {
         >
           {/* Logo and Description */}
           <div className="text-center md:text-left">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            <h3 className="display-heading text-2xl text-ink mb-2">
               Nathan Maniego
             </h3>
             <p className="text-gray-600 max-w-sm text-sm">
@@ -49,14 +49,14 @@ const Footer = () => {
           </div>
 
           {/* Social Links */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
             {socialLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
                 target={link.href.startsWith("mailto") ? undefined : "_blank"}
                 rel={link.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-                className={`p-2 text-gray-400 transition-colors ${link.hoverColor} icon-hover`}
+                className="p-2.5 rounded-full border border-ink/15 text-ink hover:bg-ink hover:text-cream transition-colors icon-hover"
                 aria-label={link.name}
               >
                 <link.icon className="w-5 h-5" />
@@ -66,9 +66,12 @@ const Footer = () => {
         </div>
 
         {/* Copyright */}
-        <div className="mt-8 pt-8 border-t border-gray-100 text-center">
+        <div className="mt-10 pt-8 border-t border-ink/10 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-gray-500 text-sm">
             © {currentYear} Nathan Maniego. All rights reserved.
+          </p>
+          <p className="text-[10px] uppercase tracking-[0.2em] text-gray-500">
+            /Powered by matcha
           </p>
         </div>
       </div>

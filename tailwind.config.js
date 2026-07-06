@@ -14,6 +14,8 @@ module.exports = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        cream: "#EFECE6",
+        ink: "#161513",
       },
       animation: {
         'fade-in': 'fadeIn 0.6s ease-out',
