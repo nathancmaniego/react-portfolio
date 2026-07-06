@@ -36,6 +36,35 @@ function AnimatedSection({ children, className = "", delay = 0 }) {
   );
 }
 
+// Rotating badge sticker (desktop: over the headline's O; mobile: on the photo)
+// `id` must be unique per instance — SVG textPath resolves ids document-wide
+function BadgeSticker({ id, className }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 100 100"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <circle cx="50" cy="50" r="49" fill="var(--background)" />
+      <g className="spin-slow" style={{ transformOrigin: "50px 50px" }}>
+        <defs>
+          <path
+            id={id}
+            d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"
+          />
+        </defs>
+        <text fontSize="9.5" fontWeight="600" letterSpacing="1">
+          <textPath href={`#${id}`} textLength="236">
+            SOFTWARE DEVELOPER • TORONTO • UOFT CS •
+          </textPath>
+        </text>
+      </g>
+      <path d="M50 43c.5 3.7 3 6.2 6.7 6.7-3.7.5-6.2 3-6.7 6.7-.5-3.7-3-6.2-6.7-6.7 3.7-.5 6.2-3 6.7-6.7z" />
+    </svg>
+  );
+}
+
 // Circle-arrow link ("View All Work" style)
 function ArrowLink({ href, children, ...props }) {
   return (
@@ -89,53 +118,40 @@ export default function Home() {
                 <path d="M5 4.6c3.8 3.4 3.8 11.4 0 14.8M19 4.6c-3.8 3.4-3.8 11.4 0 14.8" />
               </svg>
 
-              <h1 className="display-heading text-[clamp(3.25rem,13vw,10rem)] text-ink">
+              <h1 className="display-heading text-[clamp(2.5rem,13vw,10rem)] text-ink">
                 <span className="block">Nathan</span>
                 <span className="block sm:translate-x-12">Maniego</span>
               </h1>
 
-              {/* Rotating circular badge sticker */}
-              <svg
-                className="absolute bottom-14 -right-3 sm:bottom-6 sm:-right-20 w-20 sm:w-28 h-auto text-ink"
-                viewBox="0 0 100 100"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <circle cx="50" cy="50" r="49" fill="var(--background)" />
-                <g className="spin-slow" style={{ transformOrigin: "50px 50px" }}>
-                  <defs>
-                    <path
-                      id="badge-circle"
-                      d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"
-                    />
-                  </defs>
-                  <text fontSize="9.5" fontWeight="600" letterSpacing="1">
-                    <textPath href="#badge-circle" textLength="236">
-                      SOFTWARE DEVELOPER • TORONTO • UOFT CS •
-                    </textPath>
-                  </text>
-                </g>
-                <path d="M50 43c.5 3.7 3 6.2 6.7 6.7-3.7.5-6.2 3-6.7 6.7-.5-3.7-3-6.2-6.7-6.7 3.7-.5 6.2-3 6.7-6.7z" />
-              </svg>
+              <BadgeSticker
+                id="badge-circle-desktop"
+                className="hidden sm:block absolute bottom-6 -right-20 w-28 h-auto text-ink"
+              />
 
-              <p className="hero-animate hero-animate-delay-3 mt-8 text-[11px] sm:text-sm uppercase tracking-[0.25em] text-gray-500">
+              <p className="hero-animate hero-animate-delay-3 mt-8 text-[11px] sm:text-sm uppercase tracking-[0.18em] sm:tracking-[0.25em] text-gray-500 text-balance">
                 Computer Science @ University of Toronto
               </p>
             </div>
           </div>
 
-          {/* Bottom strip: ©year / portrait / tagline */}
+          {/* Bottom strip: ©year / portrait / tagline (flex-1 sides keep the photo centered) */}
           <div className="hero-animate hero-animate-delay-4 w-full max-w-6xl mx-auto flex items-end justify-between gap-4">
-            <p className="text-2xl sm:text-4xl font-extrabold tracking-tight text-ink">
+            <p className="flex-1 text-2xl sm:text-4xl font-extrabold tracking-tight text-ink">
               ©{year}
             </p>
-            <Image
-              src={avatar}
-              alt="Nathan Maniego"
-              className="w-28 sm:w-40 h-auto rounded-xl border-4 border-white shadow-lg -rotate-2 hover:rotate-0 transition-transform duration-300"
-              priority
-            />
-            <p className="text-[10px] sm:text-sm uppercase tracking-[0.2em] text-gray-500">
+            <div className="relative shrink-0">
+              <Image
+                src={avatar}
+                alt="Nathan Maniego"
+                className="w-40 sm:w-60 h-auto rounded-xl border-4 border-white shadow-lg -rotate-2 hover:rotate-0 transition-transform duration-300 my-4"
+                priority
+              />
+              <BadgeSticker
+                id="badge-circle-mobile"
+                className="sm:hidden absolute -top-5 -right-5 w-16 h-auto text-ink"
+              />
+            </div>
+            <p className="flex-1 text-right text-[10px] sm:text-sm uppercase tracking-[0.2em] text-gray-500">
               /Based in Toronto
             </p>
           </div>
