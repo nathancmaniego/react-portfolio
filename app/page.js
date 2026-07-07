@@ -170,7 +170,7 @@ export default function Home() {
                 Hey!
               </h2>
               <p className="text-lg font-medium leading-snug text-ink max-w-xs">
-                I'm Nathan, a third-year Computer Science student at the
+                I'm Nathan, a fourth-year Computer Science student at the
                 University of Toronto, currently building full-stack products
                 and exploring machine learning.
               </p>

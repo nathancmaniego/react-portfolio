@@ -11,6 +11,8 @@ import datapro from "@/assets/logos/321datapro.jpg";
 import ops from "@/assets/logos/ops.png";
 import uoftai from "@/assets/logos/uoftai.png";
 import e4x from "@/assets/logos/E4X-icon.png";
+import eccc from "@/assets/logos/eccc.jpeg";
+
 
 // ------------------------------------------------------------
 // EXPERIENCES — newest first. To add one, copy this template:
@@ -30,6 +32,13 @@ export const experiences = [
     period: "September 2023 - Present",
     description: "Pursuing Bachelor of Science in Computer Science with a minor in Business and Mathematics.",
     logo: uoft,
+  },
+  {
+    title: "Software Engineer Intern",
+    company: "Environment Climate Change Canada (ECCC)",
+    period: "May 2026 - May 2027",
+    description: "Working on weather.gc.ca, developing and maintaining web applications to provide accurate weather information to Canadians.",
+    logo: eccc,
   },
   {
     title: "Software Engineer Intern",
@@ -76,6 +85,14 @@ export const experiences = [
 // To force a specific color, add tint: "#hex" to the project.
 // ------------------------------------------------------------
 const rawProjects = [
+  {
+    title: "Consumer Heads Up Display",
+    description: "Your deadpan AI financial advisor in your pocket. Point, scan, get a straight answer: “Should I buy this?”",
+    technologies: ["React Native (with Expo)", "FastAPI", "Gemini", "Railtracks", "MediaPipe", ],
+    liveUrl: "https://devpost.com/software/c-h-u-d",
+    category: "personal",
+    emoji: "💸",
+  },
   {
     title: "QUEST",
     description: "QUEST is an AI RPG that builds your identity through real-life actions. Literally leveling up solo.",
